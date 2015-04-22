@@ -1,4 +1,5 @@
 # Odin
 DAT255 Project
 
-Vision: Kartlägga mobbning
+Vision:
+Vår app skall möjliggöra rapportering och kartläggning av fysiska mobbningsincidenter för att på bästa sätt hjälpa de som drabbats.
