@@ -11,15 +11,16 @@
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:text="Report"
-        android:id="@+id/reportbutton"
+        android:id="@+id/reportButton"
         android:background="#e4d4cd00"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:clickable="true"
         android:longClickable="false"
         android:textColor="#ff000000"
         android:textSize="36dp"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_below="@+id/starBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -28,7 +29,72 @@
         android:rating="0"
         android:numStars="5"
         android:stepSize="0.5"
-        android:layout_marginTop="71dp"
-        android:layout_below="@+id/reportbutton"
+        android:layout_below="@+id/ratingTitle"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="30dp"
+        android:id="@+id/editComplaint"
+        android:background="#ffffffff"
+        android:maxHeight="60dp"
+        android:maxLines="2"
+        android:shadowColor="#ffb4b4b4"
+        android:layout_below="@+id/complaintTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="What is your complaint?"
+        android:id="@+id/complaintTitle"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="66dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName"
+        android:text="Your Name"
+        android:ems="10"
+        android:id="@+id/editName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#ffffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="How would you rate your experience?"
+        android:id="@+id/ratingTitle"
+        android:textSize="15dp"
+        android:layout_below="@+id/editComplaint"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/responseText"
+        android:layout_below="@+id/reportButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:elegantTextHeight="true"
+        android:textSize="15dp" />
 </RelativeLayout>

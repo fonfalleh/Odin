@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -16,18 +18,30 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button dumbButton = (Button) findViewById(R.id.reportbutton);
+        Button reportButton = (Button) findViewById(R.id.reportButton);
         final RatingBar starBar = (RatingBar) findViewById(R.id.starBar);
+        final EditText editComplaint = (EditText) findViewById(R.id.editComplaint);
+        final EditText editName = (EditText) findViewById(R.id.editName);
+        final TextView responseText = (TextView) findViewById(R.id.responseText);
 
         View.OnClickListener dumbListener = new View.OnClickListener() {
-            float rating = 0.0f;
             @Override
             public void onClick(View v) {
-                rating = rating + 0.5f;
-                starBar.setRating(rating);
+                float rating = starBar.getRating();
+                System.out.println("Name: " + editName.getText());
+                System.out.println("Complaint: \n" + editComplaint.getText());
+                System.out.println("\nRating:" + rating);
+                responseText.clearComposingText();
+                if (rating < 1.5) {
+                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nGeez you whiner, get over it!");
+                } else if (rating < 3.5) {
+                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nCalling you mom now.");
+                } else {
+                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
+                }
             }
         };
-        dumbButton.setOnClickListener(dumbListener);
+        reportButton.setOnClickListener(dumbListener);
     }
 
     @Override
