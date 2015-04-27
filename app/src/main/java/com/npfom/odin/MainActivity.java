@@ -1,12 +1,13 @@
 package com.npfom.odin;
 
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RatingBar;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -14,8 +15,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        Button dumbButton = (Button) findViewById(R.id.reportbutton);
+        final RatingBar starBar = (RatingBar) findViewById(R.id.starBar);
+
+        View.OnClickListener dumbListener = new View.OnClickListener() {
+            float rating = 0.0f;
+            @Override
+            public void onClick(View v) {
+                rating = rating + 0.5f;
+                starBar.setRating(rating);
+            }
+        };
+        dumbButton.setOnClickListener(dumbListener);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,14 +52,5 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    Button dumbButton = (Button) findViewById(R.id.reportbutton);
 
-    OnClickListener dumbListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            System.out.println("Button!!!");
-        }
-    };
-
-    dumbButton.setOnClickListener(dumbListener);
 }

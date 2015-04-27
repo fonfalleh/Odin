@@ -1,7 +1,5 @@
 package com.npfom.odin;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -11,3 +9,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 }
+import android.app.Application;
+import android.test.ApplicationTestCase;
