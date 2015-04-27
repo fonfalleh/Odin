@@ -29,8 +29,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 float rating = starBar.getRating();
                 System.out.println("Name: " + editName.getText());
-                System.out.println("Complaint: \n" + editComplaint.getText());
-                System.out.println("\nRating:" + rating);
+                System.out.println("Complaint: " + editComplaint.getText());
+                System.out.println("Rating:" + rating);
                 responseText.clearComposingText();
                 if (rating < 1.5) {
                     responseText.setText("Your complaint of " + rating + "stars has been registered. \nGeez you whiner, get over it!");
