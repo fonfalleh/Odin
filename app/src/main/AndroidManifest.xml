@@ -49,6 +49,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".ReportActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
     </application>
 
 </manifest>

@@ -27,6 +27,9 @@ public class MainActivity extends ActionBarActivity {
         final TextView responseText = (TextView) findViewById(R.id.responseText);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+
+        //Listener with definition of what should happen on button press, that is
+        // send the entered data and current coordinates to the SQL server.
         View.OnClickListener dumbListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +45,11 @@ public class MainActivity extends ActionBarActivity {
                 } else {
                     responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
                 }
-                ConnectionManager cm = new ConnectionManager();
-                Coordinates cc = new Coordinates(1.0000,3.0000);
+                Coordinates cc = new Coordinates(1.001,3.002);
                 String complaint = "" +  editComplaint.getText();
-                cm.sendReport(complaint,cc);
+                String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
+                new ConnectionManager().execute(parameters);
+
             }
         };
         reportButton.setOnClickListener(dumbListener);
