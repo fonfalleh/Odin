@@ -1,7 +1,10 @@
 package com.npfom.odin;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -45,7 +48,19 @@ public class MainActivity extends ActionBarActivity {
                 } else {
                     responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
                 }
-                Coordinates cc = new Coordinates(1.001,3.002);
+                //TODO very temp
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                double lat, lng;
+                if(location != null) {
+                    lat = location.getLatitude();
+                    lng = location.getLongitude();
+                } else {
+                    lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
+                    lng = 11.949335;
+                }
+                Coordinates cc = new Coordinates(lat, lng);
+                //TODO end temp
                 String complaint = "" +  editComplaint.getText();
                 String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
                 new ConnectionManager().execute(parameters);

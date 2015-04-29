@@ -13,6 +13,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.npfom.odin.ShowLocationActivity;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -66,10 +68,33 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
         // Get the location manager
+        //TODO Debugging purposes, refactor later
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double lat = location.getLatitude();
-        double lng = location.getLongitude();
+        double lat, lng;
+        if(location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+        } else {
+            lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
+            lng = 11.949335;
+        }
+        //Add gps-tests
         mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Marker"));
+    }
+
+    /**
+     * When given a list of locations (from database or other source), the locations will be marked on the map.
+     * @param locations
+     */
+    public void addMarkers(List<Location> locations){
+        double tlat, tlng;
+        for(Location l : locations){
+            if(l != null) {
+                tlat = l.getLatitude();
+                tlng = l.getLongitude();
+                mMap.addMarker(new MarkerOptions().position(new LatLng(tlat, tlng)).title("Marker"));
+            }
+        }
     }
 }

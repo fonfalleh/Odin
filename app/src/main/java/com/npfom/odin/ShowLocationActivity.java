@@ -21,7 +21,7 @@ public class ShowLocationActivity extends Activity implements LocationListener {
     private TextView longitudeField;
     private LocationManager locationManager;
     private String provider;
-    private double dlat, dlon;
+    private double dlat, dlng;
 
 
     /** Called when the activity is first created. */
@@ -67,12 +67,8 @@ public class ShowLocationActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        dlat = location.getLatitude();
-        dlon = location.getLongitude();
-        int lat = (int) dlat;
-        int lng = (int) dlon;
-        latituteField.setText(String.valueOf(lat));
-        longitudeField.setText(String.valueOf(lng));
+        latituteField.setText(String.valueOf(dlat));
+        longitudeField.setText(String.valueOf(dlng));
     }
 
     @Override
@@ -95,6 +91,6 @@ public class ShowLocationActivity extends Activity implements LocationListener {
     }
 
     public LatLng currentLatLng() {
-        return new LatLng(dlat,dlon);
+        return new LatLng(dlat,dlng);
     }
 }
