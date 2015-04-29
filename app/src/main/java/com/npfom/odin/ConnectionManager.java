@@ -18,10 +18,10 @@ public class ConnectionManager {
     public String sendReport(String report, Coordinates cords) {
         URL url;
         HttpURLConnection connection = null;
-        String parameters = "incident=" + report + "&lat=" + cords.getLat() + "&lng=" + cords.getLng();
+        String parameters = "incident=" + report + "&lat=" + cords.getLat() + "&long=" + cords.getLng();
         try {
             //Create connection
-            url = new URL("htttp://188.166.95.224/incident_manager/v1/incidents");
+            url = new URL("http://188.166.95.224/incident_manager/v1/incidents");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
