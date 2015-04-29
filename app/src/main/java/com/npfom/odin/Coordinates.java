@@ -19,7 +19,7 @@ public class Coordinates {
         return lat;
     }
 
-    public double getYLng() {
+    public double getLng() {
         return lng;
     }
 

@@ -41,6 +41,10 @@ public class MainActivity extends ActionBarActivity {
                 } else {
                     responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
                 }
+                ConnectionManager cm = new ConnectionManager();
+                Coordinates cc = new Coordinates(1.0000,3.0000);
+                String complaint = "" +  editComplaint.getText();
+                cm.sendReport(complaint,cc);
             }
         };
         reportButton.setOnClickListener(dumbListener);
