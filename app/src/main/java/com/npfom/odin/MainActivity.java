@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         final EditText editComplaint = (EditText) findViewById(R.id.editComplaint);
         final EditText editName = (EditText) findViewById(R.id.editName);
         final TextView responseText = (TextView) findViewById(R.id.responseText);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         View.OnClickListener dumbListener = new View.OnClickListener() {
             @Override

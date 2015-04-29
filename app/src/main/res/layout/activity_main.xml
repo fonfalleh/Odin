@@ -97,4 +97,17 @@
         android:layout_alignParentEnd="true"
         android:elegantTextHeight="true"
         android:textSize="15dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignRight="@+id/starBar"
+        android:layout_alignEnd="@+id/starBar"
+        android:layout_below="@+id/starBar"
+        android:layout_alignLeft="@+id/starBar"
+        android:layout_alignStart="@+id/starBar"
+        android:focusable="false"
+        android:background="#ff2028be" />
 </RelativeLayout>
