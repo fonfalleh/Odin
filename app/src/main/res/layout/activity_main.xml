@@ -110,4 +110,13 @@
         android:layout_alignStart="@+id/starBar"
         android:focusable="false"
         android:background="#ff2028be" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_gps"
+        android:onClick="checkGPS"
+        android:layout_alignTop="@+id/reportButton"
+        android:layout_toLeftOf="@+id/reportButton"
+        android:layout_toStartOf="@+id/reportButton" />
 </RelativeLayout>

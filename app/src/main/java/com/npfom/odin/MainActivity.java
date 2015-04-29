@@ -1,6 +1,7 @@
 package com.npfom.odin;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -72,5 +73,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * Testing launching other activities
+     * @param view
+     */
+    public void checkGPS(View view) {
+        Intent intent = new Intent(this, ShowLocationActivity.class);
+        startActivity(intent);
+    }
 }

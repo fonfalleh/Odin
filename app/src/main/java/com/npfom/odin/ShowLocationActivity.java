@@ -14,11 +14,14 @@ import android.location.LocationManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class ShowLocationActivity extends Activity implements LocationListener {
     private TextView latituteField;
     private TextView longitudeField;
     private LocationManager locationManager;
     private String provider;
+    private double dlat, dlon;
 
 
     /** Called when the activity is first created. */
@@ -64,8 +67,10 @@ public class ShowLocationActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        int lat = (int) (location.getLatitude());
-        int lng = (int) (location.getLongitude());
+        dlat = location.getLatitude();
+        dlon = location.getLongitude();
+        int lat = (int) dlat;
+        int lng = (int) dlon;
         latituteField.setText(String.valueOf(lat));
         longitudeField.setText(String.valueOf(lng));
     }
@@ -87,5 +92,9 @@ public class ShowLocationActivity extends Activity implements LocationListener {
     public void onProviderDisabled(String provider) {
         Toast.makeText(this, "Disabled provider " + provider,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public LatLng currentLatLng() {
+        return new LatLng(dlat,dlon);
     }
 }
