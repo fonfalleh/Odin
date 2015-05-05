@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
                 //TODO end temp
                 String complaint = "" +  editComplaint.getText();
                 String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
-                new ConnectionManager().execute(parameters);
+                new RequestManager().execute(parameters, "POST");
 
             }
         };

@@ -55,4 +55,9 @@ public class RequestManager extends AsyncTask<String, Void, String> {
         }
         return "";
     }
+    @Override
+    protected void onPostExecute(String result){
+        System.out.println("Result: " + result);
+
+    }
 }
