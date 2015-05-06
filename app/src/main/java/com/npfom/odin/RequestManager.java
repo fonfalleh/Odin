@@ -1,7 +1,11 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
+<<<<<<< HEAD
 import android.widget.TextView;
+=======
+import android.util.Log;
+>>>>>>> 67bab4542810571b6ba9475b0becadafa422e4d1
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -64,7 +68,7 @@ public class RequestManager extends AsyncTask<String, Void, String> {
     }
     @Override
     protected void onPostExecute(String result){
-        System.out.println("Result: " + result);
+        Log.d("RequestManager","Result: " + result);
         textArea.setText(result);
 
     }
