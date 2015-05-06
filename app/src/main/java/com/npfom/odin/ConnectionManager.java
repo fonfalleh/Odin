@@ -1,6 +1,7 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -29,23 +30,23 @@ public class ConnectionManager extends AsyncTask<String, Void, String> {
 
         //Create connection
         try {
-            System.out.println("1");
+            Log.d("ConnectionManager","1");
 
             url = new URL("http://188.166.95.224/incident_manager/v1/incidents");
             connection = (HttpURLConnection) url.openConnection();
-            System.out.println("2");
+            Log.d("ConnectionManager","2");
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
             connection.setRequestProperty("Authorization", "49GbMsQ9vXdPMryrupJZ");
-            System.out.println("3");
+            Log.d("ConnectionManager","3");
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
-            System.out.println("4");
+            Log.d("ConnectionManager","4");
             try {
 
-                System.out.println("Second try started");
+                Log.d("ConnectionManager","Second try started");
                 //Send request
                 DataOutputStream wr = new DataOutputStream(
                         connection.getOutputStream());
@@ -53,7 +54,7 @@ public class ConnectionManager extends AsyncTask<String, Void, String> {
                 wr.flush();
                 wr.close();
 
-                System.out.println("Get response");
+                Log.d("ConnectionManager","Get response");
                 //Get Response
                 InputStream is = connection.getInputStream();
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -64,13 +65,13 @@ public class ConnectionManager extends AsyncTask<String, Void, String> {
                     response.append('\r');
                 }
                 rd.close();
-                System.out.println("Almost at return!");
+                Log.d("ConnectionManager","Almost at return!");
                 return response.toString();
 
             } catch (Exception e) {
                 e.printStackTrace();
 
-                System.out.println("Parameters: " + parameters);
+                Log.d("ConnectionManager","Parameters: " + parameters);
 
          /*   Map<String,List<String>> map = connection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet()){
@@ -98,7 +99,7 @@ public class ConnectionManager extends AsyncTask<String, Void, String> {
     }
 
     protected void onPostExecute(String result) {
-        System.out.println(result);
+        Log.d("ConnectionManager",result);
     }
 
 

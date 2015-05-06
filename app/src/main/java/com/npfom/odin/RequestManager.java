@@ -1,6 +1,7 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -57,7 +58,8 @@ public class RequestManager extends AsyncTask<String, Void, String> {
     }
     @Override
     protected void onPostExecute(String result){
-        System.out.println("Result: " + result);
+        Log.d("RequestManager", "Result: " + result);
+
 
     }
 }
