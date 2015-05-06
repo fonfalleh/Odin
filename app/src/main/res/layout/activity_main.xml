@@ -19,9 +19,10 @@
         android:textColor="#ff000000"
         android:textSize="36dp"
         android:typeface="normal"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/editComplaint" />
+        android:layout_marginTop="94dp"
+        android:layout_below="@+id/editComplaint"
+        android:layout_alignRight="@+id/nameTitle"
+        android:layout_alignEnd="@+id/nameTitle" />
 
     <EditText
         android:layout_width="400dp"
@@ -102,16 +103,27 @@
         android:id="@+id/gpsButton"
         android:onClick="checkGPS"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:id="@+id/timeButton"
         android:text="TIME"
-        android:onClick="showTime"
-        android:layout_alignParentTop="true"
+        android:onClick="pickTime"
+        android:layout_below="@+id/editComplaint"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/dateButton"
+        android:text="DATE"
+        android:onClick="pickDate"
+        android:layout_alignBottom="@+id/timeButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
