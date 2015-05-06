@@ -18,19 +18,9 @@
         android:textColor="#ff000000"
         android:textSize="36dp"
         android:typeface="normal"
-        android:layout_below="@+id/starBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp" />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/starBar"
-        android:rating="0"
-        android:numStars="5"
-        android:stepSize="0.5"
-        android:layout_below="@+id/ratingTitle"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/editComplaint" />
 
     <EditText
         android:layout_width="400dp"
@@ -48,38 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="What is your complaint?"
+        android:text="What is the incident you want to report?"
         android:id="@+id/complaintTitle"
         android:textSize="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="66dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:inputType="textPersonName"
-        android:text="Your Name"
-        android:ems="10"
-        android:id="@+id/editName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#ffffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="How would you rate your experience?"
-        android:id="@+id/ratingTitle"
-        android:textSize="15dp"
-        android:layout_below="@+id/editComplaint"
+        android:layout_below="@+id/editName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -98,25 +60,54 @@
         android:elegantTextHeight="true"
         android:textSize="15dp" />
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_alignRight="@+id/starBar"
-        android:layout_alignEnd="@+id/starBar"
-        android:layout_below="@+id/starBar"
-        android:layout_alignLeft="@+id/starBar"
-        android:layout_alignStart="@+id/starBar"
-        android:focusable="false"
-        android:background="#ff2028be" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="50dp"
+        android:text="What is your name? (Default Anonymous)"
+        android:id="@+id/nameTitle"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="30dp"
+        android:id="@+id/editName"
+        android:background="#ffffffff"
+        android:maxHeight="60dp"
+        android:maxLines="2"
+        android:shadowColor="#ffb4b4b4"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nameTitle"
+        android:layout_alignParentLeft="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_gps"
-        android:onClick="checkGPS"
-        android:layout_alignTop="@+id/reportButton"
-        android:layout_toLeftOf="@+id/reportButton"
-        android:layout_toStartOf="@+id/reportButton" />
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="MAP"
+        android:id="@+id/mapButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="GPS"
+        android:id="@+id/gpsButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/timeButton"
+        android:text="TIME"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

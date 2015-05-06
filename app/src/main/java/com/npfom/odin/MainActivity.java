@@ -12,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
@@ -23,52 +21,90 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Find all interface elements
         Button reportButton = (Button) findViewById(R.id.reportButton);
-        final RatingBar starBar = (RatingBar) findViewById(R.id.starBar);
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        //These two buttons not yet used
+        Button gpsButton = (Button) findViewById(R.id.gpsButton);
+        Button timeButton = (Button) findViewById(R.id.timeButton);
+
+        //Elements to be modified in onClick-methods need to be declared final (Why?)
         final EditText editComplaint = (EditText) findViewById(R.id.editComplaint);
         final EditText editName = (EditText) findViewById(R.id.editName);
         final TextView responseText = (TextView) findViewById(R.id.responseText);
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
-        //Listener with definition of what should happen on button press, that is
-        // send the entered data and current coordinates to the SQL server.
-        View.OnClickListener dumbListener = new View.OnClickListener() {
+        //Create listeners for all the buttons
+
+        //Listener for the "Report"-button, with definition of what should happen on button press,
+        // that is send the entered data and current coordinates to the SQL server.
+        View.OnClickListener reportListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float rating = starBar.getRating();
-                System.out.println("Name: " + editName.getText());
-                System.out.println("Complaint: " + editComplaint.getText());
-                System.out.println("Rating:" + rating);
                 responseText.clearComposingText();
-                if (rating < 1.5) {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nGeez you whiner, get over it!");
-                } else if (rating < 3.5) {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nCalling you mom now.");
+
+                //Name does not actually get sent to database at the moment
+                //as the value of this functionality is questionable
+                //but we can at least print it for the user! :)
+                if (editName.getText().length() == 0) {
+                    responseText.setText("Name: Anonymous");
                 } else {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
+                    responseText.setText("Name: " + editName.getText());
                 }
+                responseText.append("\nComplaint: " + editComplaint.getText());
                 //TODO very temp
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                double lat, lng;
-                if(location != null) {
-                    lat = location.getLatitude();
-                    lng = location.getLongitude();
+
+                // Test: 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
+                // To demonstrate app on emulator or phone without working GPS.
+                // These get overwritten if actual coordinated can be found.
+                Coordinates cc = new Coordinates(57.687163, 11.949335);
+
+                if (location != null) {
+                    cc.setNewCoordinates(location.getLatitude(), location.getLongitude());
+                    responseText.append("\nCoordinates: " + cc.toString());
                 } else {
-                    lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
-                    lng = 11.949335;
+                    responseText.append("\nCould not connect to GPS.\nUsing predefined coordinates.");
                 }
-                Coordinates cc = new Coordinates(lat, lng);
                 //TODO end temp
-                String complaint = "" +  editComplaint.getText();
+                String complaint = "" + editComplaint.getText();
                 String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
                 new RequestManager().execute(parameters, "POST");
-
             }
         };
-        reportButton.setOnClickListener(dumbListener);
+
+        // Create listener for the "MAP"-button
+        View.OnClickListener mapListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                responseText.setText("MAP!");
+            }
+        };
+
+        // Create listener for the "GPS"-button
+        View.OnClickListener gpsListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                responseText.setText("GPS!");
+            }
+        };
+
+        // Create listener for the "TIME"-button
+        View.OnClickListener timeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                responseText.setText("TIME!");
+            }
+        };
+
+        //Set appropriate listeners for all buttons
+        reportButton.setOnClickListener(reportListener);
+        mapButton.setOnClickListener(mapListener);
+        gpsButton.setOnClickListener(gpsListener);
+        timeButton.setOnClickListener(timeListener);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,6 +130,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Testing launching other activities
+     *
      * @param view
      */
     public void checkGPS(View view) {
