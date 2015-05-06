@@ -1,6 +1,7 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -12,6 +13,12 @@ import java.net.HttpURLConnection;
  * Created by bjornahlander on 15-05-05.
  */
 public class RequestManager extends AsyncTask<String, Void, String> {
+    private TextView textArea;
+
+    public RequestManager(TextView text){
+        textArea = text;
+
+    }
     @Override
     protected String doInBackground(String... params) {
         HttpURLConnection connection = null;
@@ -58,6 +65,11 @@ public class RequestManager extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result){
         System.out.println("Result: " + result);
+        textArea.setText(result);
+
+    }
+
+    private void displayResult(String res) {
 
     }
 }
