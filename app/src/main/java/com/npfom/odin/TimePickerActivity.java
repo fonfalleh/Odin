@@ -16,10 +16,6 @@ public class TimePickerActivity extends ActionBarActivity {
         setContentView(R.layout.activity_time_picker);
 
         TimePicker timeP = (TimePicker) findViewById(R.id.timePicker);
-
-        timeP.is24HourView();
-        timeP.setCurrentHour(13);
-        timeP.setCurrentMinute(37);
     }
 
     public void doneWithActivity(View view) {

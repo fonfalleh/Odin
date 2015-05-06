@@ -16,7 +16,6 @@ public class DatePickerActivity extends ActionBarActivity {
         setContentView(R.layout.activity_datepicker);
 
         DatePicker dateP = (DatePicker) findViewById(R.id.datePicker);
-        dateP.updateDate(1994, 5, 25);
     }
 
     public void doneWithActivity(View view) {
@@ -27,7 +26,7 @@ public class DatePickerActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_date_and_time, menu);
+        getMenuInflater().inflate(R.menu.menu_date_picker, menu);
         return true;
     }
 
