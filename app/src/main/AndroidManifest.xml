@@ -28,7 +28,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
-
         </activity>
         <activity
             android:name=".ShowLocationActivity"
@@ -44,12 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".MyService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
 
         <activity
             android:name=".ReportActivity"
