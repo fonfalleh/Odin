@@ -12,6 +12,7 @@
         android:layout_height="80dp"
         android:text="Report"
         android:id="@+id/reportButton"
+        android:onClick="sendReport"
         android:background="#e4d4cd00"
         android:clickable="true"
         android:longClickable="false"
