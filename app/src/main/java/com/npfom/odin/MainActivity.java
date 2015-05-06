@@ -10,64 +10,63 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public class MainActivity extends ActionBarActivity {
+
+    EditText editComplaint;
+    EditText editName;
+    TextView responseText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Find all interface elements
-        Button reportButton = (Button) findViewById(R.id.reportButton);
-        final RatingBar starBar = (RatingBar) findViewById(R.id.starBar);
-        final EditText editComplaint = (EditText) findViewById(R.id.editComplaint);
-        final EditText editName = (EditText) findViewById(R.id.editName);
-        final TextView responseText = (TextView) findViewById(R.id.responseText);
+        //Elements to be modified in onClick-methods need to be declared final (Why?)
+        editComplaint = (EditText) findViewById(R.id.editComplaint);
+        editName = (EditText) findViewById(R.id.editName);
+        responseText = (TextView) findViewById(R.id.responseText);
 
+    }
 
-        //Listener with definition of what should happen on button press, that is
-        // send the entered data and current coordinates to the SQL server.
-        View.OnClickListener dumbListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float rating = starBar.getRating();
-                System.out.println("Name: " + editName.getText());
-                System.out.println("Complaint: " + editComplaint.getText());
-                System.out.println("Rating:" + rating);
-                responseText.clearComposingText();
-                if (rating < 1.5) {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nGeez you whiner, get over it!");
-                } else if (rating < 3.5) {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nCalling you mom now.");
-                } else {
-                    responseText.setText("Your complaint of " + rating + "stars has been registered. \nSending SWAT-team to your location now.");
-                }
-                //TODO very temp
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                double lat, lng;
-                if(location != null) {
-                    lat = location.getLatitude();
-                    lng = location.getLongitude();
-                } else {
-                    lat = 57.7072189; // TODO test 57.7072189,11.9670495 (Gustaf Adlofs torg)
-                    lng = 11.9670495;
-                }
-                Coordinates cc = new Coordinates(lat, lng);
-                //TODO end temp
-                String complaint = "" +  editComplaint.getText();
-                String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
-                new RequestManager().execute(parameters, "POST");
+    public void sendReport(View view) {
+        responseText.clearComposingText();
 
-            }
-        };
-        reportButton.setOnClickListener(dumbListener);
+        //Name does not actually get sent to database at the moment
+        //as the value of this functionality is questionable
+        //but we can at least print it for the user! :)
+        if (editName.getText().length() == 0) {
+            responseText.setText("Name: Anonymous");
+        } else {
+            responseText.setText("Name: " + editName.getText());
+        }
+        responseText.append("\nComplaint: " + editComplaint.getText());
+        //TODO very temp
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        // TODO test 57.7072189,11.9670495 (Gustaf Adlofs torg)
+        // Test: 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
+        // To demonstrate app on emulator or phone without working GPS.
+        // These get overwritten if actual coordinated can be found.
+        Coordinates cc = new Coordinates(57.687163, 11.949335);
+
+        if (location != null) {
+            cc.setNewCoordinates(location.getLatitude(), location.getLongitude());
+            responseText.append("\nCoordinates: " + cc.toString());
+        } else {
+            responseText.append("\nCould not connect to GPS.\nUsing predefined coordinates.");
+        }
+        //TODO end temp
+        String complaint = "" + editComplaint.getText();
+        String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
+        new RequestManager(responseText).execute(parameters, "POST");
     }
 
     @Override
@@ -90,14 +89,5 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Testing launching other activities
-     * @param view
-     */
-    public void checkGPS(View view) {
-        Intent intent = new Intent(this, ShowLocationActivity.class);
-        startActivity(intent);
     }
 }
