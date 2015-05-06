@@ -23,12 +23,12 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Find all interface elements
         Button reportButton = (Button) findViewById(R.id.reportButton);
         final RatingBar starBar = (RatingBar) findViewById(R.id.starBar);
         final EditText editComplaint = (EditText) findViewById(R.id.editComplaint);
         final EditText editName = (EditText) findViewById(R.id.editName);
         final TextView responseText = (TextView) findViewById(R.id.responseText);
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         //Listener with definition of what should happen on button press, that is
@@ -56,8 +56,8 @@ public class MainActivity extends ActionBarActivity {
                     lat = location.getLatitude();
                     lng = location.getLongitude();
                 } else {
-                    lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
-                    lng = 11.949335;
+                    lat = 57.7072189; // TODO test 57.7072189,11.9670495 (Gustaf Adlofs torg)
+                    lng = 11.9670495;
                 }
                 Coordinates cc = new Coordinates(lat, lng);
                 //TODO end temp
