@@ -74,14 +74,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-        // Create listener for the "MAP"-button
-        View.OnClickListener mapListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                responseText.setText("MAP!");
-            }
-        };
-
         // Create listener for the "GPS"-button
         View.OnClickListener gpsListener = new View.OnClickListener() {
             @Override
@@ -100,7 +92,6 @@ public class MainActivity extends ActionBarActivity {
 
         //Set appropriate listeners for all buttons
         reportButton.setOnClickListener(reportListener);
-        mapButton.setOnClickListener(mapListener);
         gpsButton.setOnClickListener(gpsListener);
         timeButton.setOnClickListener(timeListener);
     }
@@ -135,6 +126,10 @@ public class MainActivity extends ActionBarActivity {
      */
     public void checkGPS(View view) {
         Intent intent = new Intent(this, ShowLocationActivity.class);
+        startActivity(intent);
+    }
+    public void openMap(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 }
