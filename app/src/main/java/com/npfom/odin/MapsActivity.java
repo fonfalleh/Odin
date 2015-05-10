@@ -77,6 +77,8 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
         // Get the location manager
+
+        /*
         //TODO Debugging purposes, refactor later
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -91,9 +93,10 @@ public class MapsActivity extends FragmentActivity {
             lat = 57.6946377; // TODO test 57.6946377, 11.9928289 (Lisebergbanan)
             lng = 11.9928289;
         }
+        */
         checkAndAddMarkers();
         //Add gps-tests
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
+        mMap.addMarker(new MarkerOptions().position(LatLngHolder.getLatLng()).title("YOU!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); //Now has color
     }

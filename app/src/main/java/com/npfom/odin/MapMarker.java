@@ -1,17 +1,20 @@
 package com.npfom.odin;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapMarker extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
+    private Marker marker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,15 @@ public class MapMarker extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(LatLngHolder.getLatLng())
+                .title("Incident"));
+        marker.setDraggable(true);
+    }
+    public void setCoords(View view) {
+        Log.d("MapMarker", "" + marker.getPosition().latitude);
+        Intent intent = new Intent();
+        // TODO: Send back coords in an intent...
+        //setResult(0, );
     }
 }
