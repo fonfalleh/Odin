@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         //Name does not actually get sent to database at the moment
         //as the value of this functionality is questionable
         //but we can at least print it for the user! :)
-        if (editName.getText().length() == 0) {
+        if (editName.getText().equals("")) {
             responseText.setText("Name: Anonymous");
         } else {
             responseText.setText("Name: " + editName.getText());
@@ -114,19 +114,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Method to handle receiving data back from another activity
+    //Din not understand Uri's AT ALL, so used putExtra() instead :P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to, the take appropriate action
 
-        Log.d("Main Result: ", "GOT" + data.getData());
+        int timeExtra = data.getIntExtra("TIME", -1);
+        String dateExtra = data.getStringExtra("DATE");
+        Log.d("Main Result: ", "" + timeExtra);
 
-        if (requestCode == TIME_REQUEST) {
-            // Make sure the request was successful
+        if (timeExtra != -1) {
+            //If we got a time result
+            Log.d("Got inside first IF", "YAY");
+            //Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                Log.d("Clockresult: ",data.getDataString());
-                clock.setText(data.getDataString());
+                Log.d("Result in OK: ", "" + timeExtra);
+
+                int hour = timeExtra / 100;
+                int minute = timeExtra % 100;
+
+                Log.d("InB4 clock.setText:", hour + ":" + minute);
+                clock.setText(hour + ":" + minute);
             }
-        } else if (requestCode == DATE_REQUEST) {
+        } else if (dateExtra != null) {
             //Make sure the request was successful
             if (resultCode == RESULT_OK) {
 

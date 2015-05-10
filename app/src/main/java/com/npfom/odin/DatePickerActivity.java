@@ -10,12 +10,14 @@ import android.widget.DatePicker;
 
 public class DatePickerActivity extends ActionBarActivity {
 
+    DatePicker dateP;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datepicker);
 
-        DatePicker dateP = (DatePicker) findViewById(R.id.datePicker);
+        dateP = (DatePicker) findViewById(R.id.datePicker);
     }
 
     public void doneWithActivity(View view) {
