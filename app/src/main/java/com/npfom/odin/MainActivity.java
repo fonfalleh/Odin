@@ -90,4 +90,8 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void openMap(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }
