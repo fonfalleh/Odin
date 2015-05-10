@@ -7,31 +7,50 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends ActionBarActivity {
 
     EditText editComplaint;
     EditText editName;
     TextView responseText;
+    TextClock clock;
+    TextView date;
+
+    //Constants to send to date and time activities to request the appropriate data as a result.
+    static final int TIME_REQUEST = 1337;
+    static final int DATE_REQUEST = 80085;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Elements to be modified in onClick-methods need to be declared final (Why?)
+        //Get pointers to Text-edit and Text-response fields.
         editComplaint = (EditText) findViewById(R.id.editComplaint);
         editName = (EditText) findViewById(R.id.editName);
         responseText = (TextView) findViewById(R.id.responseText);
+
+        //Get pointers to date and time fields
+        clock = (TextClock) findViewById(R.id.showClock);
+        date = (TextView) findViewById(R.id.showDate);
+
+        //Set the date view to the current date, supplied by Calendar
+        Calendar cal = new GregorianCalendar();
+        date.setText(cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK) +
+                " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR));
+
     }
 
     public void sendReport(View view) {
@@ -51,9 +70,12 @@ public class MainActivity extends ActionBarActivity {
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         // Test: 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
+        // Plus or minus 0.01 for both lat and long, to get some more dispersed tags ;)
         // To demonstrate app on emulator or phone without working GPS.
         // These get overwritten if actual coordinated can be found.
-        Coordinates cc = new Coordinates(57.687163, 11.949335);
+        Random rng = new Random();
+        Coordinates cc = new Coordinates(57.687163 + ((rng.nextDouble()-0.5)/50),
+                11.949335 + ((rng.nextDouble()-0.5)/50));
 
         if (location != null) {
             cc.setNewCoordinates(location.getLatitude(), location.getLongitude());
@@ -68,7 +90,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Methods that get called to open other activities in the application, when the corresponding
-    // button in the interface gets pressed!
+    // button or field in the interface gets clicked! Date and Time activities start with a
+    // response code that gets received in the onActivityResult-method.
 
     public void checkGPS(View view) {
         Intent intent = new Intent(this, ShowLocationActivity.class);
@@ -82,12 +105,35 @@ public class MainActivity extends ActionBarActivity {
 
     public void pickDate(View view) {
         Intent intent = new Intent(this, DatePickerActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, DATE_REQUEST);
     }
 
     public void pickTime(View view) {
         Intent intent = new Intent(this, TimePickerActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, TIME_REQUEST);
+    }
+
+    //Method to handle receiving data back from another activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to, the take appropriate action
+
+        Log.d("Main Result: ", "GOT" + data.getData());
+
+        if (requestCode == TIME_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Log.d("Clockresult: ",data.getDataString());
+                clock.setText(data.getDataString());
+            }
+        } else if (requestCode == DATE_REQUEST) {
+            //Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+
+
+            }
+        }
     }
 
     //Base methods, auto-implemented by Android Studio
