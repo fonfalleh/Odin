@@ -12,9 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextClock;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -25,12 +25,14 @@ public class MainActivity extends ActionBarActivity {
     EditText editComplaint;
     EditText editName;
     TextView responseText;
-    TextClock clock;
-    TextView date;
+    TextView timeView;
+    TextView dateView;
+    int time;
+    int date;
 
     //Constants to send to date and time activities to request the appropriate data as a result.
     static final int TIME_REQUEST = 1337;
-    static final int DATE_REQUEST = 80085;
+    static final int DATE_REQUEST = 1338;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,21 @@ public class MainActivity extends ActionBarActivity {
         responseText = (TextView) findViewById(R.id.responseText);
 
         //Get pointers to date and time fields
-        clock = (TextClock) findViewById(R.id.showClock);
-        date = (TextView) findViewById(R.id.showDate);
+        timeView = (TextView) findViewById(R.id.showTime);
+        dateView = (TextView) findViewById(R.id.showDate);
 
-        //Set the date view to the current date, supplied by Calendar
+        //Set the date and time views to the current date and time, supplied by Calendar.
+        // Time won't update after the app is first opened, which is the intended functionality
         Calendar cal = new GregorianCalendar();
-        date.setText(cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK) +
-                " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR));
 
+        time = cal.get(Calendar.HOUR_OF_DAY) * 100 + cal.get(Calendar.MINUTE);
+        Log.d("Calculated time to be: ", "" + time);
+        date = cal.get(Calendar.YEAR) * 10000 + cal.get(Calendar.MONTH) * 100 + cal.get(Calendar.DAY_OF_MONTH);
+        Log.d("Calculated date to be: ", "" + date);
+
+        dateView.setText((date / 10000) + getMonth((date/100)%100) + date%1000000);
+        //Formatting needed to get leading zeroes
+        timeView.setText(String.format("%02d:%02d", time/100, time%100));
     }
 
     public void sendReport(View view) {
@@ -114,35 +123,36 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Method to handle receiving data back from another activity
-    //Din not understand Uri's AT ALL, so used putExtra() instead :P
+    //Did not understand Uri's AT ALL, so used putExtra() instead :P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         int timeExtra = data.getIntExtra("TIME", -1);
-        String dateExtra = data.getStringExtra("DATE");
-        Log.d("Main Result: ", "" + timeExtra);
+        int dateExtra = data.getIntExtra("DATE", -1);
 
-        if (timeExtra != -1) {
-            //If we got a time result
-            Log.d("Got inside first IF", "YAY");
-            //Make sure the request was successful
+        //Check which kind of result we got back
+        if (requestCode == TIME_REQUEST) {
+            Log.d("We got a: " ,"TIME REQUEST");
+            //Make sure the request was successful (not sure if needed but what the hell)
             if (resultCode == RESULT_OK) {
-                Log.d("Result in OK: ", "" + timeExtra);
-
-                int hour = timeExtra / 100;
-                int minute = timeExtra % 100;
-
-                Log.d("InB4 clock.setText:", hour + ":" + minute);
-                clock.setText(hour + ":" + minute);
+                time = timeExtra;
+                Log.d("InB4 timeView.setText:", "" + timeExtra);
+                timeView.setText(String.format("%02d:%02d", time/100, time%100));
             }
-        } else if (dateExtra != null) {
-            //Make sure the request was successful
+        } else if (requestCode == DATE_REQUEST) {
+            Log.d("We got a: " ,"DATE REQUEST");
             if (resultCode == RESULT_OK) {
-
-
-
+                date = dateExtra;
+                Log.d("Result in OK: ", "" + dateExtra);
+                dateView.setText((date / 10000) + getMonth((date/100)%100) + date%1000000);
             }
         }
+    }
+
+
+    //Method to convert month number as int to month name as String
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getMonths()[month];
     }
 
     //Base methods, auto-implemented by Android Studio

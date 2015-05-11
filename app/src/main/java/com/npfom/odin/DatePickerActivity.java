@@ -1,7 +1,10 @@
 package com.npfom.odin;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +19,17 @@ public class DatePickerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datepicker);
-
         dateP = (DatePicker) findViewById(R.id.datePicker);
     }
 
     public void doneWithActivity(View view) {
+        Log.d("DateActivity Sends:", "DoneButton pressed.");
+        Intent result = new Intent();
+        result.putExtra("DATE", "" + dateP.getDayOfMonth() + dateP.getMonth() + dateP.getYear());
+        setResult(Activity.RESULT_OK, result);
+        Log.d("DateActivity Sends: ", "Result set to: " + dateP.getDayOfMonth() + dateP.getMonth() + dateP.getYear());
         finish();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
