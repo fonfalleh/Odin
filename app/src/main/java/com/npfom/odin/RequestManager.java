@@ -1,11 +1,9 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
-<<<<<<< HEAD
 import android.widget.TextView;
-=======
 import android.util.Log;
->>>>>>> 67bab4542810571b6ba9475b0becadafa422e4d1
+
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -17,10 +15,16 @@ import java.net.HttpURLConnection;
  * Created by bjornahlander on 15-05-05.
  */
 public class RequestManager extends AsyncTask<String, Void, String> {
-    private TextView textArea;
+    private TextView textArea = null;
+    private RequestString responses = null;
 
-    public RequestManager(TextView text){
-        textArea = text;
+    public RequestManager(Object obj){
+        if(obj instanceof TextView){
+            textArea = (TextView) obj;
+        } else {
+            responses = (RequestString) obj;
+        }
+
 
     }
     @Override
@@ -38,14 +42,28 @@ public class RequestManager extends AsyncTask<String, Void, String> {
 
 
             //Send request
-            DataOutputStream wr = new DataOutputStream(
-                    connection.getOutputStream());
-            wr.writeBytes(params[0]);
-            wr.flush();
-            wr.close();
+
+            if (params[1].equals("POST")) {
+                DataOutputStream wr = new DataOutputStream(
+                        connection.getOutputStream());
+                wr.writeBytes(params[0]);
+                wr.flush();
+                wr.close();
+            }
+
+
+               Log.d("Reponse", String.valueOf(connection.getResponseCode()));
+               Log.d("ResMess",String.valueOf(connection.getResponseMessage()));
+
 
             //Get Response
-            InputStream is = connection.getInputStream();
+            InputStream is;
+            if(connection.getResponseCode() == 400) {
+                is = connection.getErrorStream();
+            } else {
+                is = connection.getInputStream();
+            }
+
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             String line;
             StringBuffer response = new StringBuffer();
@@ -69,7 +87,12 @@ public class RequestManager extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result){
         Log.d("RequestManager","Result: " + result);
-        textArea.setText(result);
+        if (textArea != null) {
+            textArea.setText(result);
+        } else {
+           responses.process(result);
+        }
+
 
     }
 

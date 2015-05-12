@@ -39,7 +39,7 @@ public class RequestSettings {
         conn.setRequestProperty("Authorization", authorization);
         conn.setUseCaches(false);
         conn.setDoInput(true);
-        conn.setDoOutput(true);
+        conn.setDoOutput(false);
         return conn;
     }
 
