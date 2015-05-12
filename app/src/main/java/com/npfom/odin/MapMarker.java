@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -69,9 +70,10 @@ public class MapMarker extends FragmentActivity {
         marker.setDraggable(true);
     }
     public void setCoords(View view) {
-        Log.d("MapMarker", "" + marker.getPosition().latitude);
         Intent intent = new Intent();
-        // TODO: Send back coords in an intent...
-        //setResult(0, );
+        intent.putExtra("lat", marker.getPosition().latitude);
+        intent.putExtra("lng", marker.getPosition().longitude);
+        setResult(0, intent);
+        finish();
     }
 }

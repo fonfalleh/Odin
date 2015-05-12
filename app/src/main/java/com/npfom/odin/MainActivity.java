@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
     public void openMarkerMap(View view){
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
-        startActivity(intent);
+        //startActivity(intent);
         int requestcode = 5; // A fair diceroll
         startActivityForResult (intent, requestcode);
     }
@@ -118,7 +118,9 @@ public class MainActivity extends ActionBarActivity {
     }
     protected void onActivityResult (int requestCode, int resultCode, Intent data){
         if (requestCode == 5){
-            Log.d("MainActivity result", "data.getType(); "+data.getType());
+            double lat = data.getDoubleExtra("lat", 0);
+            double lng = data.getDoubleExtra("lng", 0);
+            Log.d("Main, getting marker", "lat:" + lat + " lng:" +lng );
 
         }
     }
