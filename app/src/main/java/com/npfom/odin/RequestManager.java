@@ -1,11 +1,11 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
-<<<<<<< HEAD
+
 import android.widget.TextView;
-=======
+
 import android.util.Log;
->>>>>>> 67bab4542810571b6ba9475b0becadafa422e4d1
+
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
