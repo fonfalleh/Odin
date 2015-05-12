@@ -9,8 +9,12 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -22,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MapsActivity extends FragmentActivity {
+public class MapsActivity extends FragmentActivity implements RequestInterface{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -55,6 +59,12 @@ public class MapsActivity extends FragmentActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+        float zoom = 13;
+        LatLng target = new LatLng(57.708870,11.974560);
+        float bearing = 113;
+        float tilt = 0;
+        GoogleMapOptions opt = new GoogleMapOptions();
+        opt.camera(new CameraPosition(target,zoom,tilt,bearing));
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -88,10 +98,14 @@ public class MapsActivity extends FragmentActivity {
             Log.d("MapsActivity", "GPS fail, using phony coords.");
             lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
             lng = 11.949335;
-        }
-        checkAndAddMarkers();
-        //Add gps-tests
+    }
+        //Start Request Thread
+        //The process(String str) function will be executed when the request is finished
+        new RequestManager(this).execute("", "GET");
         mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Marker"));
+        //checkAndAddMarkers();
+        //Add gps-tests
+
     }
 
     /**
@@ -115,8 +129,11 @@ public class MapsActivity extends FragmentActivity {
          */
         //TODO make it happen :D
 
-        RequestString rs = new RequestString("");
-        new RequestManager(rs).execute("", "GET"); //TODO Fetch data from server
+    }
+
+    //In this case the process function will create a json
+    @Override
+    public void process(String str) {
 
         try{
             //TODO debugging
@@ -126,15 +143,17 @@ public class MapsActivity extends FragmentActivity {
             JSONArray incidents;
             //String stuffs = getTest.get();
             if(true){//TODO DEBUGGING stuffs != null){
-                //Log.d("MapsActivity", stuffs);
-                incidents = new JSONArray(rs.getVar());
+                //Log.d("MapsActivity", );
+                incidents = new JSONArray(str);
                 LinkedList<LatLng> coords = new LinkedList<LatLng>();
                 for(int i = 0; i < incidents.length(); i++ ){
                     double lat = incidents.getJSONObject(i).getDouble("lat");
                     double lng = incidents.getJSONObject(i).getDouble("lng");
+                    Log.d("MapsActivity","lat: "+lat+" long: "+lng );
                     coords.add(new LatLng(lat, lng));
                 }
                 addMarkers(coords);
+
                 //Get logs
                 //extract each lat&lng into coords
             }
@@ -142,4 +161,6 @@ public class MapsActivity extends FragmentActivity {
         } catch (JSONException e) { e.printStackTrace();}
 
     }
+
+
 }

@@ -15,17 +15,10 @@ import java.net.HttpURLConnection;
  * Created by bjornahlander on 15-05-05.
  */
 public class RequestManager extends AsyncTask<String, Void, String> {
-    private TextView textArea = null;
-    private RequestString responses = null;
+    private RequestInterface objectToChange = null;
 
-    public RequestManager(Object obj){
-        if(obj instanceof TextView){
-            textArea = (TextView) obj;
-        } else {
-            responses = (RequestString) obj;
-        }
-
-
+    public RequestManager(RequestInterface obj){
+        objectToChange = obj;
     }
     @Override
     protected String doInBackground(String... params) {
@@ -87,13 +80,7 @@ public class RequestManager extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result){
         Log.d("RequestManager","Result: " + result);
-        if (textArea != null) {
-            textArea.setText(result);
-        } else {
-           responses.process(result);
-        }
-
-
+        objectToChange.process(result);
     }
 
     private void displayResult(String res) {
