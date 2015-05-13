@@ -104,8 +104,9 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
             lng = 11.9928289;
         }
         */
-        checkAndAddMarkers();
-        //Add gps-tests
+        //Start Request Thread
+        //The process(String str) function will be executed when the request is finished
+        new RequestManager(this).execute("", "GET");
         mMap.addMarker(new MarkerOptions().position(LatLngHolder.getLatLng()).title("YOU!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); //Now has color
@@ -121,17 +122,6 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
                 mMap.addMarker(new MarkerOptions().position(l).title("Marker"));
             }
         }
-    }
-    public void checkAndAddMarkers(){
-        /**
-         * Keys in DB
-         * id
-         * incident
-         * lat
-         * lng
-         */
-        //TODO make it happen :D
-
     }
 
     //In this case the process function will create a json
