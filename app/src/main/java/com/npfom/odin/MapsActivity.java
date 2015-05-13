@@ -106,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
         */
         checkAndAddMarkers();
         //Add gps-tests
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
+        mMap.addMarker(new MarkerOptions().position(LatLngHolder.getLatLng()).title("YOU!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); //Now has color
     }
