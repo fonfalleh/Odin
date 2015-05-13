@@ -33,7 +33,6 @@
             android:name=".ShowLocationActivity"
             android:label="@string/title_activity_show_location" >
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -43,10 +42,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ReportActivity"
             android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".MapMarker"
+            android:label="@string/title_activity_map_marker" >
         </activity>
     </application>
 

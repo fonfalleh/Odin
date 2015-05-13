@@ -3,25 +3,27 @@ package com.npfom.odin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends ActionBarActivity {
 
     EditText editComplaint;
     EditText editName;
     TextView responseText;
+    private LocationManager locationManager;
+    private String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,14 @@ public class MainActivity extends ActionBarActivity {
         editComplaint = (EditText) findViewById(R.id.editComplaint);
         editName = (EditText) findViewById(R.id.editName);
         responseText = (TextView) findViewById(R.id.responseText);
+
+        //TODO testing shared coordinates
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the location provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        updateLocation(); //TODO Does not use provider anymore, might be null...
 
     }
 
@@ -92,7 +102,27 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     public void openMap(View view){
+        updateLocation();
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
+    }
+    public void openMarkerMap(View view){
+        updateLocation();
+        Intent intent = new Intent(this, MapMarker.class);
+        //startActivity(intent);
+        int requestcode = 5; // A fair diceroll
+        startActivityForResult (intent, requestcode);
+    }
+    private void updateLocation(){
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
+        LatLngHolder.updateLatLng(location);
+    }
+    protected void onActivityResult (int requestCode, int resultCode, Intent data){
+        if (requestCode == 5){
+            double lat = data.getDoubleExtra("lat", 0);
+            double lng = data.getDoubleExtra("lng", 0);
+            Log.d("Main, getting marker", "lat:" + lat + " lng:" +lng );
+
+        }
     }
 }

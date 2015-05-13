@@ -15,6 +15,8 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -85,6 +87,8 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
      */
     private void setUpMap() {
         // Get the location manager
+
+        /*
         //TODO Debugging purposes, refactor later
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -96,17 +100,15 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
             lng = location.getLongitude();
         } else {
             Log.d("MapsActivity", "GPS fail, using phony coords.");
-            lat = 57.687163; // TODO test 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
-            lng = 11.949335;
+            lat = 57.6946377; // TODO test 57.6946377, 11.9928289 (Lisebergbanan)
+            lng = 11.9928289;
         }
+        */
         checkAndAddMarkers();
         //Add gps-tests
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Marker"));
-        /* new RequestManager(this).execute("", "GET");
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Marker")); */
-        /* mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
                 .icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); //Now has color */
+                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); //Now has color
     }
 
     /**
