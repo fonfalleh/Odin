@@ -96,15 +96,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="GPS"
-        android:id="@+id/gpsButton"
-        android:onClick="checkGPS"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -163,7 +154,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="MARKERS"
+        android:text="Set location"
         android:id="@+id/markerButton"
         android:onClick="openMarkerMap"
         android:layout_alignParentTop="true"

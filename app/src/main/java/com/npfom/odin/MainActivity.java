@@ -17,7 +17,6 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
-import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -112,11 +111,6 @@ public class MainActivity extends AppCompatActivity {
         String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
-    }
-
-    public void checkGPS(View view) {
-        Intent intent = new Intent(this, ShowLocationActivity.class);
-        startActivity(intent);
     }
 
     public void openMap(View view){
