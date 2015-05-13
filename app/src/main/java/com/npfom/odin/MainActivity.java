@@ -6,37 +6,36 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
-    EditText editComplaint;
-    EditText editName;
-    TextView responseText;
+    private EditText editComplaint;
+    private EditText editName;
+    private TextView responseText;
     private LocationManager locationManager;
     private String provider;
-    TextView timeView;
-    TextView dateView;
-    int time = -1;
-    int date = -1;
-    int todaysDate;
+    private TextView timeView;
+    private TextView dateView;
+    private int time = -1;
+    private int date = -1;
+    private int todaysDate;
 
     //Constants to send to date and time activities to request the appropriate data as a result.
     static final int TIME_REQUEST = 1337;
     static final int DATE_REQUEST = 1338;
-    static final int LOCATION_REQUEST = 5;
+    static final int LOCATION_REQUEST = 5; //Chosen by fair dice roll
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +170,7 @@ public class MainActivity extends ActionBarActivity {
                     updateDate();
                 }
             }
-        } else if (requestCode == 5){
+        } else if (requestCode == LOCATION_REQUEST){
             double lat = data.getDoubleExtra("lat", 0);
             double lng = data.getDoubleExtra("lng", 0);
             Log.d("Main, getting marker", "lat:" + lat + " lng:" +lng );
