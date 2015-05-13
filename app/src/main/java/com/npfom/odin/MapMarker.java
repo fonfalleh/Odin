@@ -12,10 +12,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapMarker extends FragmentActivity {
+public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDragListener{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Marker marker;
+    private double lat, lng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class MapMarker extends FragmentActivity {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
+            mMap.setOnMarkerDragListener(this);
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -71,9 +73,25 @@ public class MapMarker extends FragmentActivity {
     }
     public void setCoords(View view) {
         Intent intent = new Intent();
-        intent.putExtra("lat", marker.getPosition().latitude);
-        intent.putExtra("lng", marker.getPosition().longitude);
+        intent.putExtra("lat", lat);
+        intent.putExtra("lng", lng);
         setResult(0, intent);
         finish();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+    @Override
+    public void onMarkerDragEnd (Marker marker){
+        lat = marker.getPosition().latitude;
+        lng = marker.getPosition().longitude;
+        Log.d("MapMarker", "lat: "+lat+" lng: "+lng);
     }
 }
