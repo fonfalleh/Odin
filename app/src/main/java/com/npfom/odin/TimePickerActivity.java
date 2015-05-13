@@ -25,17 +25,14 @@ public class TimePickerActivity extends ActionBarActivity {
         //Get pointer to TimePicker view and set it to 24h mode (We are in Sweden! :D)
         timeP = (TimePicker) findViewById(R.id.timePicker);
         timeP.setIs24HourView(true);
-        Log.d("TimeActivity Sends:", "TimeActivity created successfully.");
     }
 
     //When user presses done, return the picked time to MainActivity so that time can be set,
     // then finish the activity
     public void doneWithActivity(View view) {
-        Log.d("TimeActivity Sends:", "DoneButton pressed.");
         Intent result = new Intent();
-        result.putExtra("TIME", String.format("%02d:%02d", timeP.getCurrentHour(), timeP.getCurrentMinute()));
+        result.putExtra("TIME", timeP.getCurrentHour() * 100 + timeP.getCurrentMinute());
         setResult(Activity.RESULT_OK, result);
-        Log.d("TimeActivity Sends: ", "Result set to: " + timeP.getCurrentHour() + ":" + timeP.getCurrentMinute());
         finish();
     }
 

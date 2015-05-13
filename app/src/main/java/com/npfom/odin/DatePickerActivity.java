@@ -23,11 +23,9 @@ public class DatePickerActivity extends ActionBarActivity {
     }
 
     public void doneWithActivity(View view) {
-        Log.d("DateActivity Sends:", "DoneButton pressed.");
         Intent result = new Intent();
-        result.putExtra("DATE", "" + dateP.getDayOfMonth() + dateP.getMonth() + dateP.getYear());
+        result.putExtra("DATE", dateP.getDayOfMonth() + dateP.getMonth() * 100 + dateP.getYear() * 10000);
         setResult(Activity.RESULT_OK, result);
-        Log.d("DateActivity Sends: ", "Result set to: " + dateP.getDayOfMonth() + dateP.getMonth() + dateP.getYear());
         finish();
     }
 

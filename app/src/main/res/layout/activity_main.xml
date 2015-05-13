@@ -140,7 +140,7 @@
         android:layout_alignLeft="@+id/dateTitle"
         android:layout_alignStart="@+id/dateTitle"
         android:password="false"
-        android:textSize="25sp"
+        android:textSize="25dp"
         android:gravity="center"
         android:textColor="#ff000000"
         android:onClick="pickDate" />
