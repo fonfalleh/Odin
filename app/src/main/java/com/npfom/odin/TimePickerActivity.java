@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +13,7 @@ import android.widget.TextClock;
 import android.widget.TimePicker;
 
 
-public class TimePickerActivity extends ActionBarActivity {
+public class TimePickerActivity extends AppCompatActivity {
 
     TimePicker timeP;
 

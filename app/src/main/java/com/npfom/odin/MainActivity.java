@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     EditText editComplaint;
     EditText editName;
@@ -113,7 +113,6 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
-
 
     public void pickDate(View view) {
         Intent intent = new Intent(this, DatePickerActivity.class);
