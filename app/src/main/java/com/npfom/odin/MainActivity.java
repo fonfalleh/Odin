@@ -66,7 +66,8 @@ public class MainActivity extends ActionBarActivity {
         //TODO end temp
         String complaint = "" + editComplaint.getText();
         String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
-        new RequestManager(responseText).execute(parameters, "POST");
+        OdinTextView otw = new OdinTextView(responseText);
+        new RequestManager(otw).execute(parameters, "POST");
     }
 
     @Override
