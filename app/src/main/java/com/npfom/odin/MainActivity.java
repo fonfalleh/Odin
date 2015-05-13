@@ -1,8 +1,8 @@
 package com.npfom.odin;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -218,7 +218,8 @@ public class MainActivity extends ActionBarActivity {
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
         //startActivity(intent);
-        int requestcode = 5; // A fair diceroll
+        int requestcode = 5; // A fair diceroll //TODO terrible.
+
         startActivityForResult (intent, requestcode);
     }
     private void updateLocation(){
