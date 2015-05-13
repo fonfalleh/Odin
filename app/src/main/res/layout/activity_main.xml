@@ -167,6 +167,6 @@
         android:id="@+id/contactButton"
         android:onClick="openContactActivity"
         android:layout_alignTop="@+id/markerButton"
-        android:layout_alignParentStart="true" />
+        android:layout_toStartOf="@+id/markerButton" />
 
 </RelativeLayout>
