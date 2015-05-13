@@ -43,6 +43,10 @@
             android:label="@string/title_activity_map_marker" >
         </activity>
         <activity
+            android:name=".ContactActivity"
+            android:label="@string/title_activity_contact" >
+        </activity>
+        <activity
             android:name=".DatePickerActivity"
             android:label="@string/title_activity_date_picker" >
         </activity>

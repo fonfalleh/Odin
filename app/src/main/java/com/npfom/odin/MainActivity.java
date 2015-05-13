@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         LatLngHolder.updateLatLng(location);
     }
 
+
     public void pickDate(View view) {
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
     public void pickTime(View view) {
         Intent intent = new Intent(this, TimePickerActivity.class);
         startActivityForResult(intent, TIME_REQUEST);
+    }
+
+    public void openContactActivity(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivity(intent);
     }
 
     //Method to handle receiving data back from another activity
