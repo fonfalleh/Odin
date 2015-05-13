@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     //Constants to send to date and time activities to request the appropriate data as a result.
     static final int TIME_REQUEST = 1337;
     static final int DATE_REQUEST = 1338;
+    static final int LOCATION_REQUEST = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
     public void sendReport(View view) {
         responseText.clearComposingText();
 
-        //All of this info does not get sent to the database at the moment
+        //Most of this info does not get sent to the database at the moment
         // but we can at least print it for the user! :)
         if (editName.getText().length() == 0) {
             responseText.setText("Name: Anonymous");
@@ -114,11 +115,26 @@ public class MainActivity extends ActionBarActivity {
         new RequestManager(otw).execute(parameters, "POST");
     }
 
-
     public void checkGPS(View view) {
         Intent intent = new Intent(this, ShowLocationActivity.class);
         startActivity(intent);
     }
+
+    public void openMap(View view){
+        updateLocation();
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+    public void openMarkerMap(View view){
+        updateLocation();
+        Intent intent = new Intent(this, MapMarker.class);
+        startActivityForResult(intent, LOCATION_REQUEST);
+    }
+    private void updateLocation(){
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
+        LatLngHolder.updateLatLng(location);
+    }
+
     public void pickDate(View view) {
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
@@ -208,22 +224,5 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public void openMap(View view){
-        updateLocation();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
-    public void openMarkerMap(View view){
-        updateLocation();
-        Intent intent = new Intent(this, MapMarker.class);
-        //startActivity(intent);
-        int requestcode = 5; // A fair diceroll //TODO terrible.
-
-        startActivityForResult (intent, requestcode);
-    }
-    private void updateLocation(){
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
-        LatLngHolder.updateLatLng(location);
     }
 }

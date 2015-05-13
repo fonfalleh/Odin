@@ -160,4 +160,13 @@
         android:onClick="pickTime"
         android:textColor="#ff000000" />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="MARKERS"
+        android:id="@+id/markerButton"
+        android:onClick="openMarkerMap"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
