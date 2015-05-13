@@ -47,12 +47,8 @@
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".DatePickerActivity"
-            android:label="@string/title_activity_date_and_time" >
-        </activity>
-        <activity
-            android:name=".TimePickerActivity"
-            android:label="@string/title_activity_time_picker" >
+            android:name=".MapMarker"
+            android:label="@string/title_activity_map_marker" >
         </activity>
     </application>
 

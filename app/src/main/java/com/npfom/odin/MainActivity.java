@@ -67,9 +67,6 @@ public class MainActivity extends ActionBarActivity {
         new RequestManager().execute(parameters, "POST");
     }
 
-    //Methods that get called to open other activities in the application, when the corresponding
-    // button in the interface gets pressed!
-
     public void checkGPS(View view) {
         Intent intent = new Intent(this, ShowLocationActivity.class);
         startActivity(intent);
@@ -80,17 +77,15 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void pickDate(View view) {
-        Intent intent = new Intent(this, DatePickerActivity.class);
-        startActivity(intent);
+    public void showTime(View view) {
+        Calendar cal = new GregorianCalendar();
+        responseText.setText("Current time is: " +
+                cal.get(Calendar.HOUR) + ":" +
+                cal.get(Calendar.MINUTE) + ", the " +
+                cal.get(Calendar.DATE) + " of " +
+                cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.UK));
     }
 
-    public void pickTime(View view) {
-        Intent intent = new Intent(this, TimePickerActivity.class);
-        startActivity(intent);
-    }
-
-    //Base methods, auto-implemented by Android Studio
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
