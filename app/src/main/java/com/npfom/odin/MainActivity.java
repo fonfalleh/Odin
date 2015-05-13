@@ -1,5 +1,6 @@
 package com.npfom.odin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -143,17 +144,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        int timeExtra = data.getIntExtra("TIME", -1);
-        int dateExtra = data.getIntExtra("DATE", -1);
-
         //Check which kind of result we got back
         if (requestCode == TIME_REQUEST) {
+            int timeExtra = data.getIntExtra("TIME", -1);
             //Make sure the request was successful (not sure if needed but what the hell)
             if (resultCode == RESULT_OK) {
                 time = timeExtra;
                 updateTime();
             }
         } else if (requestCode == DATE_REQUEST) {
+            int dateExtra = data.getIntExtra("DATE", -1);
             if (resultCode == RESULT_OK) {
                 //Check if chosen date is in the future, if so, reject it.
                 if (dateExtra > todaysDate) {
@@ -165,11 +165,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else if (requestCode == LOCATION_REQUEST){
-            double lat = data.getDoubleExtra("lat", 0);
-            double lng = data.getDoubleExtra("lng", 0);
-            Log.d("Main, getting marker", "lat:" + lat + " lng:" +lng );
-            //TODO make more pretty and useful
-            //TODO Use the coordinates.
+            if(resultCode == Activity.RESULT_OK) {
+                double lat = data.getDoubleExtra("lat", 0);
+                double lng = data.getDoubleExtra("lng", 0);
+                Log.d("Main, getting marker", "lat:" + lat + " lng:" + lng);
+                //TODO make more pretty and useful
+                //TODO Use the coordinates.
+            }
         }
     }
 

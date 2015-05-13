@@ -1,5 +1,6 @@
 package com.npfom.odin;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
         Intent intent = new Intent();
         intent.putExtra("lat", lat);
         intent.putExtra("lng", lng);
-        setResult(0, intent);
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
