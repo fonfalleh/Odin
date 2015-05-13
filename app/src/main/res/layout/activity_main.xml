@@ -91,7 +91,7 @@
         android:layout_height="50dp"
         android:text="MAP"
         android:id="@+id/mapButton"
-        android:onClick="openMarkerMap"
+        android:onClick="openMap"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
