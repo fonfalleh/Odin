@@ -43,12 +43,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReportActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <activity
             android:name=".MapMarker"
             android:label="@string/title_activity_map_marker" >
+        </activity>
+        <activity
+            android:name=".DatePickerActivity"
+            android:label="@string/title_activity_date_picker" >
+        </activity>
+        <activity
+            android:name=".TimePickerActivity"
+            android:label="@string/title_activity_time_picker" >
         </activity>
     </application>
 
