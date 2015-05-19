@@ -8,11 +8,16 @@ import android.widget.TextView;
 public class OdinTextView implements RequestInterface {
     private TextView textView = null;
 
-    public OdinTextView(TextView tw){
+    public OdinTextView(TextView tw) {
         textView = tw;
     }
+
     @Override
     public void process(String str) {
-        textView.setText(str);
+        if (str.charAt(0) == ('B')) {
+            textView.append("\nReport failed! :( \nNo help for you...\n" + str);
+        } else {
+            textView.append("\nReport sent successfully!\n" + str);
+        }
     }
 }
