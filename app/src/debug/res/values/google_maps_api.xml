@@ -1,20 +1,19 @@
 <resources>
-    <!--
-    TODO: Before you run your application, you need a Google Maps API key.
+<!--
 
-    To get one, follow this link, follow the directions and press "Create" at the end:
+To get one, follow this link, follow the directions and press "Create" at the end:
 
 https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=9D:67:63:00:D4:5E:1C:F3:71:62:EA:0E:9E:0E:9D:C7:6E:62:48:5E%3Bcom.npfom.odin
 
-     B2:2A:CF:13:BE:8D:4A:C4:34:99:EA:39:45:3C:2A:1A:94:EC:E7:A4
+You can also add your credentials to an existing key, using this line:
+9D:67:63:00:D4:5E:1C:F3:71:62:EA:0E:9E:0E:9D:C7:6E:62:48:5E;com.npfom.odin
 
-    You can also add your credentials to an existing key, using this line:
-    9D:67:63:00:D4:5E:1C:F3:71:62:EA:0E:9E:0E:9D:C7:6E:62:48:5E;com.npfom.odin
-
-    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
-    string in this file.
-    -->
+Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+string in this file.
+-->
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
-        AIzaSyB3rERgu41FMqlbYrzIOnwblbk9MksBs8I <!-- Bang! -->
+        AIzaSyCmXry-YlGCC3H7rBhBBeJIHKnshMRWsgI <!-- Bang! -->
+        <!-- Jacob  KEY: AIzaSyCmXry-YlGCC3H7rBhBBeJIHKnshMRWsgI -->
+        <!-- Kasper KEY: AIzaSyB3rERgu41FMqlbYrzIOnwblbk9MksBs8I -->
     </string>
 </resources>
