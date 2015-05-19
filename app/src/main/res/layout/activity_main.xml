@@ -134,6 +134,7 @@
         android:textSize="25dp"
         android:gravity="center"
         android:textColor="#ff000000"
+        android:clickable="true"
         android:onClick="pickDate" />
 
     <TextView
@@ -148,6 +149,7 @@
         android:layout_alignBottom="@+id/showDate"
         android:textSize="25dp"
         android:gravity="center"
+        android:clickable="true"
         android:onClick="pickTime"
         android:textColor="#ff000000" />
 
