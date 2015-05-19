@@ -22,6 +22,9 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+        Intent intent = getIntent();
+        lat = intent.getDoubleExtra("lat", 0);
+        lng = intent.getDoubleExtra("lng", 0);
         setUpMapIfNeeded();
     }
 
@@ -68,7 +71,7 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
      */
     private void setUpMap() {
         marker = mMap.addMarker(new MarkerOptions()
-                .position(LatLngHolder.getLatLng())
+                .position(new LatLng(lat, lng))
                 .title("Incident"));
         marker.setDraggable(true);
     }

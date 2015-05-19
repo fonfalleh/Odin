@@ -1,5 +1,6 @@
 package com.npfom.odin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -22,11 +23,15 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements RequestInterface{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        Intent intent = getIntent();
+        lat = intent.getDoubleExtra("lat", 0);
+        lng = intent.getDoubleExtra("lng", 0);
         setUpMapIfNeeded();
     }
 
@@ -57,7 +62,7 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
         float bearing = 113;
         float tilt = 0;
         GoogleMapOptions opt = new GoogleMapOptions();
-        opt.camera(new CameraPosition(target,zoom,tilt,bearing));
+        opt.camera(new CameraPosition(target, zoom, tilt, bearing));
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -83,10 +88,11 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
         LatLng target = new LatLng(57.708870,11.974560);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target,zoom));
         new RequestManager(this).execute("", "GET");
-        mMap.addMarker(new MarkerOptions().position(LatLngHolder.getLatLng()).title("YOU!")
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                         //Current location has azure color
+
     }
 
     /**

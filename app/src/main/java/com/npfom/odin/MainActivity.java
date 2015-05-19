@@ -3,7 +3,6 @@ package com.npfom.odin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -14,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -25,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private EditText editName;
     private TextView responseText;
     private LocationManager locationManager;
-    private String provider;
     private TextView timeView;
     private TextView dateView;
     private int time = -1;
     private int date = -1;
     private int todaysDate;
+    private LatLng currentLatLng = null;
+    private LatLng reportLatLng = null;
+    private boolean useCustomCoordinates = false;
 
     //Constants to send to date and time activities to request the appropriate data as a result.
     static final int TIME_REQUEST = 1337;
@@ -47,13 +51,9 @@ public class MainActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editName);
         responseText = (TextView) findViewById(R.id.responseText);
 
-        //TODO testing shared coordinates
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the location provider -> use
-        // default
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        updateLocation(); //TODO Does not use provider anymore, might be null...
+        currentLatLng = new LatLng(57.701541, 11.926838); // Default value
+        updateLocation();
 
         //Get pointers to date and time fields
         timeView = (TextView) findViewById(R.id.showTime);
@@ -89,11 +89,6 @@ public class MainActivity extends AppCompatActivity {
         responseText.append("\nDate: " + getMonth((date / 100) % 100) + " " + (date % 100) + ", " + (date / 10000));
         responseText.append("\nTime: " + String.format("%02d:%02d", time / 100, time % 100));
 
-        //TODO very temp
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        // Test: 57.687163, 11.949335 (Folkdansringen Göteborg i Slottskogen)
         // Plus or minus 0.01 for both lat and long, to get some more dispersed tags ;)
         // To demonstrate app on emulator or phone without working GPS.
         // These get overwritten if actual coordinated can be found.
@@ -101,35 +96,43 @@ public class MainActivity extends AppCompatActivity {
         Coordinates cc = new Coordinates(57.687163 + ((rng.nextDouble() - 0.5) / 50),
                 11.949335 + ((rng.nextDouble() - 0.5) / 50));
 
-        if (location != null) {
-            cc.setNewCoordinates(location.getLatitude(), location.getLongitude());
+        if (useCustomCoordinates) {
+            cc.setNewCoordinates(reportLatLng.latitude, reportLatLng.longitude);
             responseText.append("\nCoordinates: " + cc.toString());
-        } else {
+        } else if(currentLatLng == null) {
             responseText.append("\nCould not connect to GPS.\nUsing predefined coordinates.");
+        } else {
+            cc.setNewCoordinates(currentLatLng.latitude, currentLatLng.longitude);
+            responseText.append("\nCoordinates: " + cc.toString());
         }
-        //TODO end temp
         String complaint = "" + editComplaint.getText();
         String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
     }
-
     public void openMap(View view){
         updateLocation();
         Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("lat", currentLatLng.latitude);
+        intent.putExtra("lng", currentLatLng.longitude);
         startActivity(intent);
     }
     public void openMarkerMap(View view){
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
+        intent.putExtra("lat", currentLatLng.latitude);
+        intent.putExtra("lng", currentLatLng.longitude);
         startActivityForResult(intent, LOCATION_REQUEST);
     }
     private void updateLocation(){
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
-        LatLngHolder.updateLatLng(location);
+        Location tmpLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(tmpLocation != null){
+            currentLatLng = new LatLng(
+                    tmpLocation.getLatitude(),
+                    tmpLocation.getLongitude()
+            );
+        }
     }
-
-
     public void pickDate(View view) {
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
@@ -175,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
                 double lat = data.getDoubleExtra("lat", 0);
                 double lng = data.getDoubleExtra("lng", 0);
                 Log.d("Main, getting marker", "lat:" + lat + " lng:" + lng);
-                //TODO make more pretty and useful
-                //TODO Use the coordinates.
+                reportLatLng = new LatLng(lat, lng);
+                useCustomCoordinates = true;
             }
         }
     }
@@ -223,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
