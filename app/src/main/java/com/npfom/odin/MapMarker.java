@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,6 +73,10 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        // Stolen from MapsActivity
+        float zoom = 12;
+        LatLng target = new LatLng(57.708870,11.974560);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
         marker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(lat, lng))
                 .title("Incident"));
