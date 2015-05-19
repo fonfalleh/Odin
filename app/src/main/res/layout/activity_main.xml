@@ -9,7 +9,7 @@
 
     <Button
         android:layout_width="200dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:text="Report"
         android:id="@+id/reportButton"
         android:onClick="sendReport"
@@ -19,10 +19,9 @@
         android:textColor="#ff000000"
         android:textSize="36dp"
         android:typeface="normal"
-        android:layout_marginTop="94dp"
-        android:layout_below="@+id/editComplaint"
-        android:layout_alignRight="@+id/nameTitle"
-        android:layout_alignEnd="@+id/nameTitle" />
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/markerButton"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="400dp"
@@ -52,26 +51,24 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/responseText"
-        android:layout_below="@+id/reportButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:elegantTextHeight="true"
-        android:textSize="15dp" />
+        android:textSize="10dp"
+        android:layout_below="@+id/reportButton"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="50dp"
         android:text="What is your name? (Default Anonymous)"
         android:id="@+id/nameTitle"
         android:textSize="15dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -85,16 +82,6 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nameTitle"
         android:layout_alignParentLeft="true" />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="MAP"
-        android:id="@+id/mapsActivityButton"
-        android:onClick="openMap"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 
     <TextView
@@ -159,7 +146,29 @@
         android:text="Set location"
         android:id="@+id/markerButton"
         android:onClick="openMarkerMap"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/locationExplanation"
+        android:layout_centerHorizontal="true"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Where did it happen? "
+        android:id="@+id/locationTitle"
+        android:textSize="14dp"
+        android:layout_below="@+id/showDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="(Default: Your current location)"
+        android:id="@+id/locationExplanation"
+        android:textSize="14dp"
+        android:layout_below="@+id/locationTitle"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

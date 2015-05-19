@@ -1,35 +1,80 @@
 package com.npfom.odin;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 public class LauncherActivity extends ActionBarActivity {
+
+    private Button reportActivityButton, mapsActivityButton, contactActivityButton;
+    private TextView titleText;
+    private int titlePresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+
+        //Get pointers to the buttons so that they can be disabled/enabled
+        reportActivityButton = (Button) findViewById(R.id.reportActivityButton);
+        mapsActivityButton = (Button) findViewById(R.id.mapsActivityButton);
+        contactActivityButton = (Button) findViewById(R.id.contactActivityButton);
+
+        titleText = (TextView) findViewById(R.id.launcherTitle);
     }
 
-    public void openMainActivity(View view){
+    //When returning to activity, make all buttons clickable again
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reportActivityButton.setClickable(true);
+        mapsActivityButton.setClickable(true);
+        contactActivityButton.setClickable(true);
+        titleText.setTextSize(30);
+        titleText.setText("WELCOME TO THE FRIENDS APP");
+    }
+
+    //Methods to open the three major activities
+    // When a button is clicked, disable all buttons to prevent opening multiple activities at once
+    public void openMainActivity(View view) {
+        disableButtons();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void openMapsActivity(View view){
-     //   updateLocation();
+    public void openMapsActivity(View view) {
+        disableButtons();
+        //   updateLocation();
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 
     public void openContactActivity(View view) {
+        disableButtons();
         Intent intent = new Intent(this, ContactActivity.class);
         startActivity(intent);
+    }
+
+    //Easter egg
+    public void titlePressed(View view) {
+        titlePresses++;
+        if (titlePresses > 10) {
+            titleText.setTextSize(25);
+            titleText.setText("HEY! I AIN'T NO BUTTON! STOP TOUCHING ME!");
+            titleText.setClickable(false);
+        }
+    }
+
+    private void disableButtons() {
+        reportActivityButton.setClickable(false);
+        mapsActivityButton.setClickable(false);
+        contactActivityButton.setClickable(false);
     }
 
     @Override
