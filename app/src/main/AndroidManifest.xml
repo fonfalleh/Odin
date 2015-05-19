@@ -27,8 +27,8 @@
 
         <activity
             android:name=".LauncherActivity"
-            android:label="@string/title_activity_launcher" >
-            android:screenOrientation="portrait"
+            android:label="@string/title_activity_launcher"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
