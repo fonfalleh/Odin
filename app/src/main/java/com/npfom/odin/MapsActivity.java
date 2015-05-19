@@ -96,18 +96,6 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
     }
 
     /**
-     * When given a list of locations (from database or other source), the locations will be marked on the map.
-     * @param locations Places to be marked on the map.
-     */
-    public void addMarkers(List<LatLng> locations){
-        for(LatLng l : locations){
-            if(l != null) {
-                mMap.addMarker(new MarkerOptions().position(l).title("Marker"));
-            }
-        }
-    }
-
-    /**
      * When (if) the server returns a result, it is given in the form of the string str.
      * The string is interpreted as a JSONArray and it's fields are extrated into locations that can
      * be added to the map.
@@ -117,15 +105,16 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
     public void process(String str) {
         try{
             JSONArray incidents = new JSONArray(str);
-            LinkedList<LatLng> coords = new LinkedList<LatLng>();
 
             for(int i = 0; i < incidents.length(); i++ ){
                 double lat = incidents.getJSONObject(i).getDouble("lat");
                 double lng = incidents.getJSONObject(i).getDouble("lng");
-                Log.d("MapsActivity","lat: "+lat+" long: "+lng );
-                coords.add(new LatLng(lat, lng));
+                String incident = incidents.getJSONObject(i).getString("incident");
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(lat, lng))
+                        .title("13:37 the 13 March 2007") //TODO Add actual time.
+                        .snippet(incident)); //Concatenates after 42 chars.
             }
-            addMarkers(coords);
         } catch (JSONException e) { e.printStackTrace();}
 
     }
