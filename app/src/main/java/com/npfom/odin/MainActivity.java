@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("lng", currentLatLng.longitude);
         startActivityForResult(intent, LOCATION_REQUEST);
     }
+
     private void updateLocation(){
         Location tmpLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(tmpLocation != null){
@@ -211,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Methods to disable then re-enable all buttons, to prevent user from opening multiple
+    // Activities, or instances of an Activity, at once
     private void disableButtons(){
         timeView.setClickable(false);
         dateView.setClickable(false);
@@ -226,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to convert month number as int to month name as String
-    public String getMonth(int month) {
+    private String getMonth(int month) {
         return new DateFormatSymbols().getShortMonths()[month];
     }
 
