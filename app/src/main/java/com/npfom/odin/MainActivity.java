@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Called on activity resume, makes all buttons clickable again.
     @Override
     protected void onResume(){
+        super.onResume();
         timeView.setClickable(true);
         dateView.setClickable(true);
     }
@@ -123,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         new RequestManager(otw).execute(parameters, "POST");
     }
 
+    //OnClick methods for the buttons in the Activity, to open other activities,
+    // sometimes to get results
     public void openMap(View view){
         updateLocation();
         Intent intent = new Intent(this, MapsActivity.class);
@@ -133,11 +137,6 @@ public class MainActivity extends AppCompatActivity {
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
         startActivityForResult(intent, LOCATION_REQUEST);
-    }
-
-    private void updateLocation(){
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
-        LatLngHolder.updateLatLng(location);
     }
 
     public void pickDate(View view) {
@@ -154,16 +153,10 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, TIME_REQUEST);
     }
 
-    public void openContactActivity(View view) {
-        Intent intent = new Intent(this, ContactActivity.class);
-        startActivity(intent);
-    }
-
     //Method to handle receiving data back from another activity
     //Did not understand Uri's AT ALL, so used putExtra() instead :P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         //Check which kind of result we got back
         if (requestCode == TIME_REQUEST) {
             int timeExtra = data.getIntExtra("TIME", -1);
@@ -175,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == DATE_REQUEST) {
             int dateExtra = data.getIntExtra("DATE", -1);
             if (resultCode == RESULT_OK) {
-                //Check if chosen date is in the future, if so, reject it.
+                //Check if chosen date is in the future, if so, reject it and keep the current date
                 if (dateExtra > todaysDate) {
                     dateView.setTextSize(15);
                     dateView.setText("Cannot report incidents in the future");
@@ -193,11 +186,6 @@ public class MainActivity extends AppCompatActivity {
                 //TODO Use the coordinates.
             }
         }
-    }
-
-    //Method to convert month number as int to month name as String
-    public String getMonth(int month) {
-        return new DateFormatSymbols().getShortMonths()[month];
     }
 
     //Methods to update date and time views.
@@ -218,9 +206,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateLocation(){
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
+        LatLngHolder.updateLatLng(location);
+    }
+
     private void disableButtons(){
         timeView.setClickable(false);
         dateView.setClickable(false);
+    }
+
+    //Method to convert month number as int to month name as String
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getShortMonths()[month];
     }
 
     //Base methods, auto-implemented by Android Studio

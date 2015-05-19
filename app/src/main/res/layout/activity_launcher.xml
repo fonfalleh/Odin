@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.npfom.odin.LauncherActivity"
+    android:background="#5502aed3">
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Report incident"
+        android:id="@+id/reportActivityButton"
+        android:layout_marginTop="54dp"
+        android:textSize="22dp"
+        android:layout_below="@+id/launcherTitle"
+        android:layout_centerHorizontal="true"
+        android:onClick="openMainActivity" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Show Incidents"
+        android:id="@+id/mapsActivityButton"
+        android:textSize="22dp"
+        android:layout_above="@+id/contactActivityButton"
+        android:layout_alignStart="@+id/reportActivityButton"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="openMapsActivity" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Contact"
+        android:id="@+id/contactActivityButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/mapsActivityButton"
+        android:layout_marginBottom="30dp"
+        android:textSize="22dp"
+        android:shadowColor="#ff33a5ff"
+        android:nestedScrollingEnabled="false"
+        android:longClickable="false"
+        android:ellipsize="middle"
+        android:onClick="openContactActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="WELCOME TO THE FRIENDS APP"
+        android:id="@+id/launcherTitle"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/reportActivityButton"
+        android:layout_alignEnd="@+id/mapsActivityButton"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColorHighlight="#ff565fff"
+        android:backgroundTintMode="src_in"
+        android:backgroundTint="#ff347fff" />
+
+</RelativeLayout>

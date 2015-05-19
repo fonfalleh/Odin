@@ -17,7 +17,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -26,12 +26,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".LauncherActivity"
+            android:label="@string/title_activity_launcher" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,12 +35,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapMarker"
-            android:label="@string/title_activity_map_marker" >
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" >
         </activity>
         <activity
             android:name=".ContactActivity"
             android:label="@string/title_activity_contact" >
+        </activity>
+        <activity
+            android:name=".MapMarker"
+            android:label="@string/title_activity_map_marker" >
         </activity>
         <activity
             android:name=".DatePickerActivity"

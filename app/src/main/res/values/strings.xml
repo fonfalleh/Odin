@@ -10,4 +10,5 @@
     <string name="button_gps">GPS</string>
     <string name="title_activity_map_marker">Map</string>
     <string name="title_activity_contact">ContactActivity</string>
+    <string name="title_activity_launcher">LauncherActivity</string>
 </resources>
