@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editName);
         responseText = (TextView) findViewById(R.id.responseText);
 
+        //Get pointers to buttons so that they can be disabled
+
+
         //TODO testing shared coordinates
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Define the criteria how to select the location provider -> use
@@ -73,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
             updateDate();
             updateTime();
         }
+    }
+
+    @Override
+    protected void onResume(){
+        timeView.setClickable(true);
+        dateView.setClickable(true);
     }
 
     public void sendReport(View view) {
@@ -119,23 +128,28 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
+
     public void openMarkerMap(View view){
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
         startActivityForResult(intent, LOCATION_REQUEST);
     }
+
     private void updateLocation(){
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); //provider
         LatLngHolder.updateLatLng(location);
     }
 
-
     public void pickDate(View view) {
+        disableButtons();
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
+        dateView.setClickable(false);
+        timeView.setClickable(false);
     }
 
     public void pickTime(View view) {
+        disableButtons();
         Intent intent = new Intent(this, TimePickerActivity.class);
         startActivityForResult(intent, TIME_REQUEST);
     }
@@ -202,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             dateView.setText(getMonth((date / 100) % 100) + " " + (date % 100) + ", " + (date / 10000));
         }
+    }
+
+    private void disableButtons(){
+        timeView.setClickable(false);
+        dateView.setClickable(false);
     }
 
     //Base methods, auto-implemented by Android Studio
