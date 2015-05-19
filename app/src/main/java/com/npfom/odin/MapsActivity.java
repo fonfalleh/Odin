@@ -110,9 +110,10 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
                 double lat = incidents.getJSONObject(i).getDouble("lat");
                 double lng = incidents.getJSONObject(i).getDouble("lng");
                 String incident = incidents.getJSONObject(i).getString("incident");
+                String date = incidents.getJSONObject(i).getString("created_at");
                 mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(lat, lng))
-                        .title("13:37 the 13 March 2007") //TODO Add actual time.
+                        .title(date) //TODO Add actual time.
                         .snippet(incident)); //Concatenates after 42 chars.
             }
         } catch (JSONException e) { e.printStackTrace();}
