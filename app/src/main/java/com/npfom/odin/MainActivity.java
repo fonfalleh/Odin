@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private int time = -1;
     private int date = -1;
     private int todaysDate;
+    private Button reportButton;
+    private Button markerButton;
     private LatLng currentLatLng = null;
     private LatLng reportLatLng = null;
     private boolean useCustomCoordinates = false;
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editName);
         responseText = (TextView) findViewById(R.id.responseText);
 
+        //Get pointers to buttons so that they can be disabled
+        reportButton = (Button) findViewById(R.id.reportButton);
+        markerButton = (Button) findViewById(R.id.markerButton);
+
+        //TODO testing shared coordinates
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         currentLatLng = new LatLng(57.701541, 11.926838); // Default value
         updateLocation();
@@ -77,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        timeView.setClickable(true);
-        dateView.setClickable(true);
+        enableButtons();
     }
 
     public void sendReport(View view) {
+        disableButtons();
         responseText.clearComposingText();
 
         //Most of this info does not get sent to the database at the moment
@@ -115,19 +123,13 @@ public class MainActivity extends AppCompatActivity {
         String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
+        enableButtons();
     }
     
     //OnClick methods for the buttons in the Activity, to open other activities,
     // sometimes to get results
-    public void openMap(View view){
-        updateLocation();
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("lat", currentLatLng.latitude);
-        intent.putExtra("lng", currentLatLng.longitude);
-        startActivity(intent);
-    }
-
     public void openMarkerMap(View view){
+        disableButtons();
         updateLocation();
         Intent intent = new Intent(this, MapMarker.class);
         intent.putExtra("lat", currentLatLng.latitude);
@@ -148,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
         disableButtons();
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
-        dateView.setClickable(false);
-        timeView.setClickable(false);
     }
 
     public void pickTime(View view) {
@@ -214,6 +214,15 @@ public class MainActivity extends AppCompatActivity {
     private void disableButtons(){
         timeView.setClickable(false);
         dateView.setClickable(false);
+        reportButton.setClickable(false);
+        markerButton.setClickable(false);
+    }
+
+    private void enableButtons() {
+        timeView.setClickable(true);
+        dateView.setClickable(true);
+        reportButton.setClickable(true);
+        markerButton.setClickable(true);
     }
 
     //Method to convert month number as int to month name as String
