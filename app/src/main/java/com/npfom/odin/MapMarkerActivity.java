@@ -16,11 +16,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDragListener{
+public class MapMarkerActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener{
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Marker marker;
     private double lat, lng;
+
+    /**
+     * Initialization method. Takes coordinates from parent activity and uses them as marker coordinates.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,21 +72,24 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
     }
 
     /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
+     * This is where we can add markers or lines, add listeners or move the camera.
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        // Stolen from MapsActivity
+        //Starts map somewhat zoomed in over user location.
         float zoom = 12;
-        LatLng target = new LatLng(57.708870,11.974560);
+        LatLng target = new LatLng(lat, lng);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
         marker = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng))
+                .position(target)
                 .title("Incident"));
         marker.setDraggable(true);
     }
+
+    /**
+     * When the user is done choosing a location, the coordinates are sent back to the Main Activity.
+     * @param view
+     */
     public void setCoords(View view) {
         Intent intent = new Intent();
         intent.putExtra("lat", lat);
@@ -99,10 +107,16 @@ public class MapMarker extends FragmentActivity implements GoogleMap.OnMarkerDra
     public void onMarkerDrag(Marker marker) {
 
     }
+
+    /**
+     * When the user moves a marker, the coordinates to be sent back are updated with the position
+     * of the marker.
+     * @param marker The marker that has been moved.
+     */
     @Override
     public void onMarkerDragEnd (Marker marker){
         lat = marker.getPosition().latitude;
         lng = marker.getPosition().longitude;
-        Log.d("MapMarker", "lat: "+lat+" lng: "+lng);
+        Log.d("MapMarkerActivity", "lat: "+lat+" lng: "+lng);
     }
 }
