@@ -101,11 +101,4 @@ public class ConnectionManager extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         Log.d("ConnectionManager",result);
     }
-
-
-    public Coordinates[] getReports() {
-
-        return null;
-
-    }
 }
