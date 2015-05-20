@@ -1,0 +1,27 @@
+[28-Apr-2015 00:41:04 Europe/Berlin] PHP Fatal error:  Class 'Slim\Helper\Set' not found in /Applications/MAMP/htdocs/incident_manager/libs/slim/Slim.php on line 154
+[28-Apr-2015 00:41:31 Europe/Berlin] PHP Fatal error:  Class 'Slim\Helper\Set' not found in /Applications/MAMP/htdocs/incident_manager/libs/slim/Slim.php on line 154
+[28-Apr-2015 00:41:31 Europe/Berlin] PHP Fatal error:  Class 'Slim\Helper\Set' not found in /Applications/MAMP/htdocs/incident_manager/libs/slim/Slim.php on line 154
+[28-Apr-2015 00:44:13 Europe/Berlin] PHP Fatal error:  Class 'Slim\Helper\Set' not found in /Applications/MAMP/htdocs/incident_manager/libs/slim/Slim.php on line 154
+[28-Apr-2015 00:47:38 Europe/Berlin] PHP Fatal error:  Class 'Slim\Helper\Set' not found in /Applications/MAMP/htdocs/incident_manager/libs/slim/Slim.php on line 154
+[28-Apr-2015 01:00:00 Europe/Berlin] PHP Warning:  Uncaught exception 'ErrorException' with message 'require_once(/Applications/MAMP/htdocs/incident_manager/include./DbConnect.php): failed to open stream: No such file or directory' in /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php:15
+Stack trace:
+#0 /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php(15): Slim\Slim::handleErrors(2, 'require_once(/A...', '/Applications/M...', 15, Array)
+#1 /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php(15): DbHandler::__construct()
+#2 /Applications/MAMP/htdocs/incident_manager/v1/index.php(77): DbHandler->__construct()
+#3 [internal function]: authenticate(Object(Slim\Route))
+#4 /Applications/MAMP/htdocs/incident_manager/libs/Slim/Route.php(465): call_user_func_array('authenticate', Array)
+#5 /Applications/MAMP/htdocs/incident_manager/libs/Slim/Slim.php(1357): Slim\Route->dispatch()
+#6 /Applications/MAMP/htdocs/incident_manager/libs/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /Applications/MAMP/htdocs/incident_manager/lib in /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php on line 15
+[28-Apr-2015 01:00:00 Europe/Berlin] PHP Fatal error:  DbHandler::__construct(): Failed opening required '/Applications/MAMP/htdocs/incident_manager/include./DbConnect.php' (include_path='.:/Applications/MAMP/bin/php/php5.6.7/lib/php') in /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php on line 15
+[28-Apr-2015 01:13:25 Europe/Berlin] 
+[28-Apr-2015 01:16:27 Europe/Berlin] 
+[28-Apr-2015 01:16:27 Europe/Berlin] 
+[28-Apr-2015 01:16:35 Europe/Berlin] 
+[28-Apr-2015 01:17:22 Europe/Berlin] 
+[28-Apr-2015 01:25:17 Europe/Berlin] 
+[28-Apr-2015 01:25:44 Europe/Berlin] 
+[28-Apr-2015 01:27:35 Europe/Berlin] 
+[28-Apr-2015 01:31:21 Europe/Berlin] PHP Fatal error:  Call to undefined method DbHandler::deleteTask() in /Applications/MAMP/htdocs/incident_manager/v1/index.php on line 166
+[28-Apr-2015 01:32:03 Europe/Berlin] PHP Fatal error:  Call to a member function bind_param() on boolean in /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php on line 47
+[28-Apr-2015 01:35:15 Europe/Berlin] PHP Fatal error:  Call to a member function bind_param() on boolean in /Applications/MAMP/htdocs/incident_manager/include/DbHandler.php on line 47

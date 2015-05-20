@@ -1,0 +1,11 @@
+Skapar incident RESTtest på 6.00 och 6.00
+POST http://188.166.95.224/incident_manager/v1/incidents
+incident=RESTtest&lat=6.00&long=6.00
+
+Tar bort incident med id = 2
+DELETE http://188.166.95.224/incident_manager/v1/incidents/2
+
+Hämtar alla incidenter
+GET http://188.166.95.224/incident_manager/v1/incidents
+
+
