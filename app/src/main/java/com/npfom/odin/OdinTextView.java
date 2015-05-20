@@ -14,10 +14,12 @@ public class OdinTextView implements RequestInterface {
 
     @Override
     public void process(String str) {
-        if (str.charAt(0) == ('B')) {
-            textView.append("\nReport failed!\nPlease check you internet connection and try again.");
-        } else {
+        if (str.startsWith("{\"error\":false")) {
             textView.append("\nReport sent successfully!");
+        } else {
+            textView.append("\nReport failed!\nPlease check you internet connection and try again." +
+                    "\nError Message: " + str);
         }
     }
 }
+
