@@ -135,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
         responseText.append("\nCoordinates: " + reportLatLng.toString());
 
         //Send the report to the database using RequestManager
-        String parameters = "incident=" + complaint + "&lat=" + reportLatLng.latitude +
-                "&long=" + reportLatLng.longitude;
+        //Have to check the timestamp parameter!!
+        String parameters = "name=" + name + "&incident=" + complaint + "&lat=" + reportLatLng.latitude +
+                "&long=" + reportLatLng.longitude + "&timestamp=" + timeView.getText();
         //TODO: ADD TIME, DATE and NAME to Database post request!!
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
