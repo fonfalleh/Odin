@@ -17,7 +17,7 @@ public class OdinTextView implements RequestInterface {
         if (str.startsWith("{\"error\":false")) {
             textView.append("\nReport sent successfully!");
         } else {
-            textView.append("\nReport failed!\nPlease check you internet connection and try again." +
+            textView.append("\nReport failed!" +
                     "\nError Message: " + str);
         }
     }

@@ -1,9 +1,10 @@
 package com.npfom.odin;
 
-import android.content.Intent;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,21 +18,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class MapsActivity extends FragmentActivity implements RequestInterface{
+public class MapsActivity extends FragmentActivity implements RequestInterface {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private double lat, lng;
+    private LatLng target;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Intent intent = getIntent();
-        lat = intent.getDoubleExtra("lat", 0);
-        lng = intent.getDoubleExtra("lng", 0);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         setUpMapIfNeeded();
     }
 
@@ -57,8 +54,17 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+
+        // If we can get location from the Location manager (Device GPS), update target.
+        // Otherwise, use default location
+        Location tmpLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (tmpLocation != null) {
+            target = new LatLng(tmpLocation.getLatitude(),tmpLocation.getLongitude());
+        } else {
+            target = new LatLng(57.708870, 11.974560);
+        }
+
         float zoom = 13;
-        LatLng target = new LatLng(57.708870,11.974560);
         float bearing = 113;
         float tilt = 0;
         GoogleMapOptions opt = new GoogleMapOptions();
@@ -85,28 +91,27 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
         //Start Request Thread
         //The process(String str) function will be executed when the request is finished
         float zoom = 12;
-        LatLng target = new LatLng(57.708870,11.974560);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target,zoom));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
         new RequestManager(this).execute("", "GET");
-        mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("YOU!")
+        mMap.addMarker(new MarkerOptions().position(target).title("YOU ARE HERE!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                        //Current location has azure color
-
+        //Current location has azure color
     }
 
     /**
      * When (if) the server returns a result, it is given in the form of the string str.
      * The string is interpreted as a JSONArray and it's fields are extrated into locations that can
      * be added to the map.
+     *
      * @param str The string returned from the server.
      */
     @Override
     public void process(String str) {
-        try{
+        try {
             JSONArray incidents = new JSONArray(str);
 
-            for(int i = 0; i < incidents.length(); i++ ){
+            for (int i = 0; i < incidents.length(); i++) {
                 double lat = incidents.getJSONObject(i).getDouble("lat");
                 double lng = incidents.getJSONObject(i).getDouble("lng");
                 String incident = incidents.getJSONObject(i).getString("incident");
@@ -116,7 +121,9 @@ public class MapsActivity extends FragmentActivity implements RequestInterface{
                         .title(date) //TODO Add actual time.
                         .snippet(incident)); //Concatenates after 42 chars.
             }
-        } catch (JSONException e) { e.printStackTrace();}
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }
