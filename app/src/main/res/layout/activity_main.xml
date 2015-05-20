@@ -19,7 +19,7 @@
         android:textColor="#ff000000"
         android:textSize="36dp"
         android:typeface="normal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/markerButton"
         android:layout_centerHorizontal="true" />
 
@@ -57,7 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:elegantTextHeight="true"
-        android:textSize="10dp"
+        android:textSize="13dp"
         android:layout_below="@+id/reportButton"
         android:layout_marginTop="10dp" />
 
@@ -167,8 +167,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="(Default: Your current location)"
         android:id="@+id/locationExplanation"
-        android:textSize="14dp"
         android:layout_below="@+id/locationTitle"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="12dp" />
 
 </RelativeLayout>

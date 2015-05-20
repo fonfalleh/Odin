@@ -56,9 +56,14 @@ public class MainActivity extends AppCompatActivity {
         reportButton = (Button) findViewById(R.id.reportButton);
         markerButton = (Button) findViewById(R.id.markerButton);
 
-        //TODO testing shared coordinates
+        // Plus or minus 0.01 for both lat and long, to get some more dispersed tags ;)
+        // To demonstrate app on emulator or phone without working GPS.
+        // These get overwritten if actual coordinated can be found.
+        Random rng = new Random();
+        currentLatLng = new LatLng(57.687163 + ((rng.nextDouble() - 0.5) / 50),
+                11.949335 + ((rng.nextDouble() - 0.5) / 50)); // Default value
+        //Create location manager and use it to update the location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        currentLatLng = new LatLng(57.701541, 11.926838); // Default value
         updateLocation();
 
         //Get pointers to date and time fields
@@ -92,35 +97,36 @@ public class MainActivity extends AppCompatActivity {
         disableButtons();
         responseText.clearComposingText();
 
-        //Most of this info does not get sent to the database at the moment
+        //TODO Most of this info does not get sent to the database at the moment
         // but we can at least print it for the user! :)
-        if (editName.getText().length() == 0) {
-            responseText.setText("Name: Anonymous");
-        } else {
-            responseText.setText("Name: " + editName.getText());
-        }
-        responseText.append("\nComplaint: " + editComplaint.getText());
-        responseText.append("\nDate: " + getMonth((date / 100) % 100) + " " + (date % 100) + ", " + (date / 10000));
-        responseText.append("\nTime: " + String.format("%02d:%02d", time / 100, time % 100));
 
-        // Plus or minus 0.01 for both lat and long, to get some more dispersed tags ;)
-        // To demonstrate app on emulator or phone without working GPS.
-        // These get overwritten if actual coordinated can be found.
-        Random rng = new Random();
-        Coordinates cc = new Coordinates(57.687163 + ((rng.nextDouble() - 0.5) / 50),
-                11.949335 + ((rng.nextDouble() - 0.5) / 50));
-
-        if (useCustomCoordinates) {
-            cc.setNewCoordinates(reportLatLng.latitude, reportLatLng.longitude);
-            responseText.append("\nCoordinates: " + cc.toString());
-        } else if(currentLatLng == null) {
-            responseText.append("\nCould not connect to GPS.\nUsing predefined coordinates.");
-        } else {
-            cc.setNewCoordinates(currentLatLng.latitude, currentLatLng.longitude);
-            responseText.append("\nCoordinates: " + cc.toString());
+        // Get the name. If no name is entered, default value is set.
+        String name = "" + editName.getText();
+        if (name.length() == 0) {
+            name = "Anonymous";
         }
+        // Get the incident report. If no report is entered, default value is set.
         String complaint = "" + editComplaint.getText();
-        String parameters = "incident=" + complaint + "&lat=" + cc.getLat() + "&long=" + cc.getLng();
+        if (complaint.length() == 0) {
+            complaint = "No description given";
+        }
+
+        //If the user hasn't entered a custom location, use the location from the GPS.
+        if (!useCustomCoordinates) {
+            reportLatLng = currentLatLng;
+        }
+
+        //Print the report information to the user.
+        responseText.setText("Name: " + name);
+        responseText.append("\nComplaint: " + complaint);
+        responseText.append("\nDate: " + dateView.getText());
+        responseText.append("\nTime: " + timeView.getText());
+        responseText.append("\nCoordinates: " + reportLatLng.toString());
+
+        //Send the report to the database using RequestManager
+        String parameters = "incident=" + complaint + "&lat=" + reportLatLng.latitude +
+                "&long=" + reportLatLng.longitude;
+        //TODO: ADD TIME, DATE and NAME to Database post request!!
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
         enableButtons();
@@ -165,15 +171,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Check which kind of result we got back
         if (requestCode == TIME_REQUEST) {
-            int timeExtra = data.getIntExtra("TIME", -1);
-            //Make sure the request was successful (not sure if needed but what the hell)
+            //Make sure the request was successful (it is not if the user pressed the "Back" button
+            // instead of the "Done" button)
             if (resultCode == RESULT_OK) {
+                int timeExtra = data.getIntExtra("TIME", -1);
                 time = timeExtra;
                 updateTime();
             }
         } else if (requestCode == DATE_REQUEST) {
-            int dateExtra = data.getIntExtra("DATE", -1);
             if (resultCode == RESULT_OK) {
+                int dateExtra = data.getIntExtra("DATE", -1);
                 //Check if chosen date is in the future, if so, reject it and keep the current date
                 if (dateExtra > todaysDate) {
                     dateView.setTextSize(15);

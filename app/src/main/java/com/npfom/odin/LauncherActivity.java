@@ -38,6 +38,7 @@ public class LauncherActivity extends ActionBarActivity {
         contactActivityButton.setClickable(true);
         titleText.setTextSize(30);
         titleText.setText("WELCOME TO THE FRIENDS APP");
+        titleText.setClickable(true);
     }
 
     //Methods to open the three major activities

@@ -15,9 +15,9 @@ public class OdinTextView implements RequestInterface {
     @Override
     public void process(String str) {
         if (str.charAt(0) == ('B')) {
-            textView.append("\nReport failed! :( \nNo help for you...\n" + str);
+            textView.append("\nReport failed!\nPlease check you internet connection and try again.");
         } else {
-            textView.append("\nReport sent successfully!\n" + str);
+            textView.append("\nReport sent successfully!");
         }
     }
 }
