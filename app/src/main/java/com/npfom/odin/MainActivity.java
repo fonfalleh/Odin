@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     // Coordinates in form of LatLng that deals with locations.
     // Current position (if available), initialized as some random place in Gothenburg.
     private LatLng currentLatLng;
-    // Coordinates given from the MapMarker-activity.
+    // Coordinates given from the MapMarkerActivity-activity.
     private LatLng reportLatLng;
     // Boolean that decides wether or not to use custom coorinates or gps coordinates when reporting an incident.
     private boolean useCustomCoordinates = false;
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     public void openMarkerMap(View view){
         disableButtons();
         updateLocation();
-        Intent intent = new Intent(this, MapMarker.class);
+        Intent intent = new Intent(this, MapMarkerActivity.class);
         intent.putExtra("lat", currentLatLng.latitude);
         intent.putExtra("lng", currentLatLng.longitude);
         startActivityForResult(intent, LOCATION_REQUEST);
