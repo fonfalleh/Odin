@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Members of the activity class
     private EditText editComplaint;
     private EditText editName;
     private TextView responseText;
@@ -33,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private int todaysDate;
     private Button reportButton;
     private Button markerButton;
-    private LatLng currentLatLng = null;
-    private LatLng reportLatLng = null;
+
+    // Coordinates in form of LatLng that deals with locations.
+    // Current position (if available), initialized as some random place in Gothenburg.
+    private LatLng currentLatLng;
+    // Coordinates given from the MapMarker-activity.
+    private LatLng reportLatLng;
+    // Boolean that decides wether or not to use custom coorinates or gps coordinates when reporting an incident.
     private boolean useCustomCoordinates = false;
 
     //Constants to send to date and time activities to request the appropriate data as a result.
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 11.949335 + ((rng.nextDouble() - 0.5) / 50)); // Default value
         //Create location manager and use it to update the location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Tries to update the current position of the device.
         updateLocation();
 
         //Get pointers to date and time fields
@@ -93,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
         enableButtons();
     }
 
+    /**
+     * Method for sending the user submitted incident data to the server.
+     * @param view
+     */
     public void sendReport(View view) {
         disableButtons();
         responseText.clearComposingText();
@@ -143,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, LOCATION_REQUEST);
     }
 
+    /**
+     * This method tries to fetch a new current location from the locationmanager. If if fails,
+     * the new location object (which is null) is disregarded.
+     */
     private void updateLocation(){
         Location tmpLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(tmpLocation != null){
