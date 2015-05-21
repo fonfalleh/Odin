@@ -134,11 +134,16 @@ public class MainActivity extends AppCompatActivity {
         responseText.append("\nTime: " + timeView.getText());
         responseText.append("\nCoordinates: " + reportLatLng.toString());
 
+        String timestamp = String.format("%04d-%02d-%02d %02d:%02d:%02d", (date / 10000),
+                ((date / 100) % 100) + 1, (date % 100), time / 100, time % 100, 0);
+
+        Log.d("Timestring set to: ", timestamp);
+
         //Send the report to the database using RequestManager
         //Have to check the timestamp parameter!!
-        String parameters = "name=" + name + "&incident=" + complaint + "&lat=" + reportLatLng.latitude +
-                "&long=" + reportLatLng.longitude + "&timestamp=" + timeView.getText();
-        //TODO: ADD TIME, DATE and NAME to Database post request!!
+        String parameters = "incident=" + complaint + "&lat=" + reportLatLng.latitude +
+                "&long=" + reportLatLng.longitude + "&timestamp=" + timestamp + "&name=" + name;
+        //TODO: ADD TIME, DATE and NAME to Database post request!! YYYY-MM-DD HH:MM:SS
         OdinTextView otw = new OdinTextView(responseText);
         new RequestManager(otw).execute(parameters, "POST");
         enableButtons();
