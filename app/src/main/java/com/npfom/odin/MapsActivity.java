@@ -92,10 +92,10 @@ public class MapsActivity extends FragmentActivity implements RequestInterface {
         //The process(String str) function will be executed when the request is finished
         float zoom = 12;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
-        new RequestManager(this).execute("", "GET");
         mMap.addMarker(new MarkerOptions().position(target).title("YOU ARE HERE!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        new RequestManager(this).execute("", "GET");
         //Current location has azure color
     }
 

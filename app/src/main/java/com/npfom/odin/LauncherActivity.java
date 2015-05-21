@@ -38,7 +38,7 @@ public class LauncherActivity extends AppCompatActivity {
         mapsActivityButton.setClickable(true);
         contactActivityButton.setClickable(true);
         titleText.setTextSize(30);
-        titleText.setText("WELCOME TO THE FRIENDS APP");
+        titleText.setText("WELCOME TO \nTHE ODIN INITIATIVE");
         titleText.setClickable(true);
     }
 
