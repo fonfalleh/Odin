@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     // Members of the activity class
     private EditText editComplaint;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         //Create location manager and use it to update the location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Tries to update the current position of the device.
+
         updateLocation();
 
         //Get pointers to date and time fields
@@ -286,5 +288,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if(location != null) {
+            double lat = location.getLatitude();
+            double lng = location.getLongitude();
+            Log.d("LocationUpdate", "lat: " + lat + " Lng: " + lng);
+            currentLatLng = new LatLng(lat, lng);
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
