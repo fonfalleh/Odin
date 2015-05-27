@@ -30,7 +30,7 @@ public class ContactActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 // Build the intent
-                Uri number = Uri.parse("tel:+46737008169");
+                Uri number = Uri.parse("tel:116111");
                 Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
 
                 // Verify it resolves
