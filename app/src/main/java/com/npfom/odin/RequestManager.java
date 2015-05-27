@@ -1,7 +1,6 @@
 package com.npfom.odin;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.util.Log;
 
 import java.io.BufferedReader;
