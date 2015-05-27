@@ -1,7 +1,7 @@
 package com.npfom.odin;
 
-/**
- * Created by Bjorn on 15-05-06.
+/*
+    An interface to communicate with OdinTextView from RequestManagers AsyncTask.
  */
 public interface RequestInterface {
 
