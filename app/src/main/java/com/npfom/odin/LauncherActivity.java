@@ -2,7 +2,6 @@ package com.npfom.odin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,9 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+/*
+    The activity that launches when the app starts. From here, one can go to either Report Incident,
+    Show Incidents or Contact pages. (MainActivity, MapsActivity, and ContactActivity, respectively)
+ */
 public class LauncherActivity extends AppCompatActivity {
 
+    // Graphical components.
     private Button reportActivityButton, mapsActivityButton, contactActivityButton;
     private TextView titleText;
     private int titlePresses;
@@ -42,7 +45,7 @@ public class LauncherActivity extends AppCompatActivity {
         titleText.setClickable(true);
     }
 
-    //Methods to open the three major activities
+    // Methods to open the three major activities
     // When a button is clicked, disable all buttons to prevent opening multiple activities at once
     public void openMainActivity(View view) {
         disableButtons();
@@ -63,7 +66,7 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Easter egg
+    // Easter egg
     public void titlePressed(View view) {
         titlePresses++;
         if (titlePresses > 10) {
@@ -72,7 +75,7 @@ public class LauncherActivity extends AppCompatActivity {
             titleText.setClickable(false);
         }
     }
-
+    // Disables buttons to prevent multiple activities being launched by mistake.
     private void disableButtons() {
         reportActivityButton.setClickable(false);
         mapsActivityButton.setClickable(false);

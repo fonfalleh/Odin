@@ -9,23 +9,23 @@ import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/*
+    Activity for selecting custom coordinates to report.
+ */
 public class MapMarkerActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener{
 
+    // Map components.
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Marker marker;
     private double lat, lng;
 
-    /**
-     * Initialization method. Takes coordinates from parent activity and uses them as marker coordinates.
-     * @param savedInstanceState
-     */
+
+    // Initialization method. Takes coordinates from parent activity and uses them as marker coordinates.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,21 +42,7 @@ public class MapMarkerActivity extends FragmentActivity implements GoogleMap.OnM
         setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
+    // Generated method for setting up map (if needed).
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -71,25 +57,23 @@ public class MapMarkerActivity extends FragmentActivity implements GoogleMap.OnM
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+    // This is where we can add markers or lines, add listeners or move the camera.
+    // This should only be called once and when we are sure that mMap is not null.
     private void setUpMap() {
         //Starts map somewhat zoomed in over user location.
         float zoom = 12;
         LatLng target = new LatLng(lat, lng);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
+
+        // Adds the marker ( using coordinates from MainActivty).
         marker = mMap.addMarker(new MarkerOptions()
                 .position(target)
                 .title("Incident"));
         marker.setDraggable(true);
     }
 
-    /**
-     * When the user is done choosing a location, the coordinates are sent back to the Main Activity.
-     * @param view
-     */
+
+    // When the user is done choosing a location, the coordinates are sent back to the Main Activity.
     public void setCoords(View view) {
         Intent intent = new Intent();
         intent.putExtra("lat", lat);
@@ -98,21 +82,18 @@ public class MapMarkerActivity extends FragmentActivity implements GoogleMap.OnM
         finish();
     }
 
+    // Inherited methods needed, currently not used.
     @Override
     public void onMarkerDragStart(Marker marker) {
 
     }
-
     @Override
     public void onMarkerDrag(Marker marker) {
 
     }
 
-    /**
-     * When the user moves a marker, the coordinates to be sent back are updated with the position
-     * of the marker.
-     * @param marker The marker that has been moved.
-     */
+
+    // When the user moves a marker, the coordinates to be sent back are updated with the position of the marker.
     @Override
     public void onMarkerDragEnd (Marker marker){
         lat = marker.getPosition().latitude;

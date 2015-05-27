@@ -13,9 +13,9 @@ import android.widget.Button;
 
 import java.util.List;
 
-//Vad händer när det creatas
-//Vad händer när man klickar på saker
-
+/*
+    Activity for getting contact information about help-organizations.
+ */
 public class ContactActivity extends ActionBarActivity {
 
     @Override
@@ -29,8 +29,6 @@ public class ContactActivity extends ActionBarActivity {
         View.OnClickListener phone = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Nu fungerar telefonen!");
-
                 // Build the intent
                 Uri number = Uri.parse("tel:+46737008169");
                 Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
@@ -52,8 +50,6 @@ public class ContactActivity extends ActionBarActivity {
         View.OnClickListener webPage = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Nu fungerar websidan!");
-
                 // Build the intent
                 Uri webpage = Uri.parse("http://www.bris.se");
                 Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
@@ -70,17 +66,7 @@ public class ContactActivity extends ActionBarActivity {
             }
         };
         webPageButton.setOnClickListener(webPage);
-
-
-
-
-
-
-
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

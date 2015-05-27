@@ -2,21 +2,19 @@ package com.npfom.odin;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by bjornahlander on 15-05-05.
+/*
+    Class for setting up connections for communicating with the database.
  */
 public class RequestSettings {
+    // Paths for the database.
     private String postURL = "http://188.166.95.224/incident_manager/v1/incidents";
-    private String authorization = "49GbMsQ9vXdPMryrupJZ";
     private String getURL = "http://188.166.95.224/incident_manager/v1/incidents";
+    // Authorization string for the server.
+    private String authorization = "49GbMsQ9vXdPMryrupJZ";
 
-    /*
-    Surround with try-catch
-    close connection on your end
-     */
+    // Sets up a POST connection to the database.
     public HttpURLConnection getPOSTConnection() throws IOException {
         URL url = new URL(postURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -30,6 +28,7 @@ public class RequestSettings {
         return conn;
     }
 
+    // Sets up a GET connection to the database.
     public HttpURLConnection getGETConnection() throws IOException {
         URL url = new URL(getURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -42,5 +41,4 @@ public class RequestSettings {
         conn.setDoOutput(false);
         return conn;
     }
-
 }

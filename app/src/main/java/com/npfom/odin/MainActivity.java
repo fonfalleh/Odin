@@ -20,21 +20,24 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+/*
+    Main activity for creating an incident report.
+ */
 public class MainActivity extends AppCompatActivity {
 
     // Members of the activity class
+    // Graphical components
     private EditText editComplaint;
     private EditText editName;
     private TextView responseText;
-    private LocationManager locationManager;
     private TextView timeView;
     private TextView dateView;
-    private int time = -1;
-    private int date = -1;
-    private int todaysDate;
     private Button reportButton;
     private Button markerButton;
 
+    // Members dealing with locations.
+
+    private LocationManager locationManager;
     // Coordinates in form of LatLng that deals with locations.
     // Current position (if available), initialized as some random place in Gothenburg.
     private LatLng currentLatLng;
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private LatLng reportLatLng;
     // Boolean that decides wether or not to use custom coorinates or gps coordinates when reporting an incident.
     private boolean useCustomCoordinates = false;
+
+    // Members that deals with time.
+    private int time = -1;
+    private int date = -1;
+    private int todaysDate;
 
     //Constants to send to date and time activities to request the appropriate data as a result.
     static final int TIME_REQUEST = 1337;
@@ -68,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         Random rng = new Random();
         currentLatLng = new LatLng(57.687163 + ((rng.nextDouble() - 0.5) / 50),
                 11.949335 + ((rng.nextDouble() - 0.5) / 50)); // Default value
-        //Create location manager and use it to update the location
+
+        // Create location manager and use it to update the location
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Tries to update the current position of the device.
         updateLocation();
@@ -83,33 +92,27 @@ public class MainActivity extends AppCompatActivity {
         // as possible.
         if (time == -1 && date == -1) {
             Calendar cal = new GregorianCalendar();
-
+        // Some number formatting of the date.
             time = cal.get(Calendar.HOUR_OF_DAY) * 100 + cal.get(Calendar.MINUTE);
             date = cal.get(Calendar.YEAR) * 10000 + cal.get(Calendar.MONTH) * 100 + cal.get(Calendar.DAY_OF_MONTH);
-            //Used to make sure the user doesn't enter a date in the future
+            // Used to make sure the user doesn't enter a date in the future
             todaysDate = date;
             updateDate();
             updateTime();
         }
     }
 
-    //Called on activity resume, makes all buttons clickable again.
+    // Called on activity resume, makes all buttons clickable again.
     @Override
     protected void onResume(){
         super.onResume();
         enableButtons();
     }
 
-    /**
-     * Method for sending the user submitted incident data to the server.
-     * @param view
-     */
+    // Method for sending the user submitted incident data to the server.
     public void sendReport(View view) {
         disableButtons();
         responseText.clearComposingText();
-
-        //TODO Most of this info does not get sent to the database at the moment
-        // but we can at least print it for the user! :)
 
         // Get the name. If no name is entered, default value is set.
         String name = "" + editName.getText();
@@ -135,17 +138,16 @@ public class MainActivity extends AppCompatActivity {
         responseText.append("\nCoordinates: " + reportLatLng.toString());
 
         String timestamp = String.format("%04d-%02d-%02d %02d:%02d:%02d",
-                (date / 10000),             // YEAR
+                (date / 10000),             // Year
                 ((date / 100) % 100) + 1,   // Month
                 (date % 100),               // Day
                 time / 100,                 // Hour
                 time % 100,                 // Minute
-                0);                         // Second (Discarded, needed for timestamp)
+                0);                         // Second (Discarded, but needed for timestamp)
 
         Log.d("Timestring set to: ", timestamp);
 
-        //Send the report to the database using RequestManager
-        //Have to check the timestamp parameter!!
+        // Send the report to the database using RequestManager.
         String parameters = "incident=" + complaint + "&lat=" + reportLatLng.latitude +
                 "&long=" + reportLatLng.longitude + "&timestamp=" + timestamp + "&name=" + name;
         OdinTextView otw = new OdinTextView(responseText);
@@ -153,8 +155,7 @@ public class MainActivity extends AppCompatActivity {
         enableButtons();
     }
     
-    //OnClick methods for the buttons in the Activity, to open other activities,
-    // sometimes to get results
+    // OnClick methods for the buttons in the Activity, to open other activities.
     public void openMarkerMap(View view){
         disableButtons();
         updateLocation();
@@ -164,10 +165,8 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, LOCATION_REQUEST);
     }
 
-    /**
-     * This method tries to fetch a new current location from the locationmanager. If if fails,
-     * the new location object (which is null) is disregarded.
-     */
+    //  This method tries to fetch a new current location from the locationmanager. If if fails,
+    //  the new location object (which is null) is disregarded.
     private void updateLocation(){
         Location tmpLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(tmpLocation != null){
@@ -178,12 +177,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Method for choosing what date to report.
     public void pickDate(View view) {
         disableButtons();
         Intent intent = new Intent(this, DatePickerActivity.class);
         startActivityForResult(intent, DATE_REQUEST);
     }
-
+    // Method for choosing what time to report.
     public void pickTime(View view) {
         disableButtons();
         Intent intent = new Intent(this, TimePickerActivity.class);
@@ -191,12 +191,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Method to handle receiving data back from another activity
-    //Did not understand Uri's AT ALL, so used putExtra() instead :P
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Check which kind of result we got back
         if (requestCode == TIME_REQUEST) {
-            //Make sure the request was successful (it is not if the user pressed the "Back" button
+            // Make sure the request was successful (it is not if the user pressed the "Back" button
             // instead of the "Done" button)
             if (resultCode == RESULT_OK) {
                 int timeExtra = data.getIntExtra("TIME", -1);
@@ -216,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         } else if (requestCode == LOCATION_REQUEST){
+            // Results from MapMarkerActivity, takes the coordinates and uses them in a report.
             if(resultCode == Activity.RESULT_OK) {
                 double lat = data.getDoubleExtra("lat", 0);
                 double lng = data.getDoubleExtra("lng", 0);
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Methods to disable then re-enable all buttons, to prevent user from opening multiple
+    // Methods to disable then re-enable all buttons, to prevent user from opening multiple
     // Activities, or instances of an Activity, at once
     private void disableButtons(){
         timeView.setClickable(false);
