@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity implements RequestInterface {
 
@@ -109,17 +111,21 @@ public class MapsActivity extends FragmentActivity implements RequestInterface {
     @Override
     public void process(String str) {
         try {
-            JSONArray incidents = new JSONArray(str);
-
-            for (int i = 0; i < incidents.length(); i++) {
-                double lat = incidents.getJSONObject(i).getDouble("lat");
-                double lng = incidents.getJSONObject(i).getDouble("lng");
-                String incident = incidents.getJSONObject(i).getString("incident");
-                String date = incidents.getJSONObject(i).getString("created_at");
-                mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(lat, lng))
-                        .title(date) //TODO Add actual time.
-                        .snippet(incident)); //Concatenates after 42 chars.
+            JSONObject response = new JSONObject(str);
+            if (response.getBoolean("error")){
+                Log.d("error: ","There is a problem with the Http Request");
+            } else {
+                JSONArray incidents = new JSONArray(response.getString("incidents"));
+                for (int i = 0; i < incidents.length(); i++) {
+                    double lat = incidents.getJSONObject(i).getDouble("lat");
+                    double lng = incidents.getJSONObject(i).getDouble("lng");
+                    String incident = incidents.getJSONObject(i).getString("incident");
+                    String date = incidents.getJSONObject(i).getString("created_at");
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lat, lng))
+                            .title(date) //TODO Add actual time.
+                            .snippet(incident)); //Concatenates after 42 chars.
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
