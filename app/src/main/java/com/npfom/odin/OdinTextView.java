@@ -2,8 +2,8 @@ package com.npfom.odin;
 
 import android.widget.TextView;
 
-/**
- * Created by bjornahlander on 15-05-12.
+/*
+    Custom textview for displaying messages to be sent and received from the database.
  */
 public class OdinTextView implements RequestInterface {
     private TextView textView = null;
@@ -12,6 +12,7 @@ public class OdinTextView implements RequestInterface {
         textView = tw;
     }
 
+    // Method for modifying the text.
     @Override
     public void process(String str) {
         if (str.startsWith("{\"error\":false")) {

@@ -4,15 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-
+/*
+    Activity for picking a date to report.
+ */
 public class DatePickerActivity extends AppCompatActivity {
 
+    // Date to report.
     DatePicker dateP;
 
     @Override
@@ -22,6 +24,7 @@ public class DatePickerActivity extends AppCompatActivity {
         dateP = (DatePicker) findViewById(R.id.datePicker);
     }
 
+    // When we are done picking a date, this method returns the date to the previous activity.
     public void doneWithActivity(View view) {
         Intent result = new Intent();
         result.putExtra("DATE", dateP.getDayOfMonth() + dateP.getMonth() * 100 + dateP.getYear() * 10000);

@@ -20,8 +20,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+    Activity for displaying a map with all reported incidents as markers.
+ */
 public class MapsActivity extends FragmentActivity implements RequestInterface {
 
+    // Map components.
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LatLng target;
     private LocationManager locationManager;
@@ -40,21 +44,7 @@ public class MapsActivity extends FragmentActivity implements RequestInterface {
         setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
+    // Generated method for setting up map (if needed).
     private void setUpMapIfNeeded() {
 
         // If we can get location from the Location manager (Device GPS), update target.
@@ -83,53 +73,51 @@ public class MapsActivity extends FragmentActivity implements RequestInterface {
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+    // This is where we can add markers or lines, add listeners or move the camera.
     private void setUpMap() {
-        //Start Request Thread
-        //The process(String str) function will be executed when the request is finished
+
         float zoom = 12;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, zoom));
+        // Current location marker has azure color
         mMap.addMarker(new MarkerOptions().position(target).title("YOU ARE HERE!")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        //Start Request Thread
+        //The process(String str) function will be executed when the request is finished
         new RequestManager(this).execute("", "GET");
-        //Current location has azure color
+
     }
 
-    /**
-     * When (if) the server returns a result, it is given in the form of the string str.
-     * The string is interpreted as a JSONArray and it's fields are extrated into locations that can
-     * be added to the map.
-     *
-     * @param str The string returned from the server.
-     */
+    // When (if) the server returns a result, it is given in the form of the string str.
+    // The string is interpreted as a JSONArray and it's fields are extracted into locations that can
+    // be added to the map.
     @Override
     public void process(String str) {
         try {
+            // Creates a JSON Object from the response from GET-request
             JSONObject response = new JSONObject(str);
+            // Check if there is an error in the request
             if (response.getBoolean("error")){
                 Log.d("error: ","There is a problem with the Http Request");
             } else {
+                // Create a JSON array from the incident field
                 JSONArray incidents = new JSONArray(response.getString("incidents"));
+                // For each JSONObject, take its data and use it to produce info for a marker.
                 for (int i = 0; i < incidents.length(); i++) {
                     double lat = incidents.getJSONObject(i).getDouble("lat");
                     double lng = incidents.getJSONObject(i).getDouble("lng");
                     String incident = incidents.getJSONObject(i).getString("incident");
                     String date = incidents.getJSONObject(i).getString("created_at");
+                    // Place the marker on the map.
                     mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(lat, lng))
-                            .title(date) //TODO Add actual time.
-                            .snippet(incident)); //Concatenates after 42 chars.
+                            .position(new LatLng(lat, lng))     // Sets coordinates
+                            .title(date)                        // Sets timestamp as title
+                            .snippet(incident));                // Sets incident description as subtext
+                    // Observation: Concatenates after 42 chars.
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }
