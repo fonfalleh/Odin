@@ -26,13 +26,44 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:name=".LauncherActivity"
+            android:label="@string/title_activity_launcher"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".MapsActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".ContactActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_contact" >
+        </activity>
+        <activity
+            android:name=".MapMarkerActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_map_marker" >
+        </activity>
+        <activity
+            android:name=".DatePickerActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_date_picker" >
+        </activity>
+        <activity
+            android:name=".TimePickerActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_time_picker" >
         </activity>
     </application>
 

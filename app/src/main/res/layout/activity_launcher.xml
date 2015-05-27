@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.npfom.odin.LauncherActivity"
+    android:background="#5502aed3">
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Report incident"
+        android:id="@+id/reportActivityButton"
+        android:textSize="22dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="openMainActivity"
+        android:layout_marginBottom="2dp"
+        android:layout_above="@+id/mapsActivityButton"
+        android:background="#e4d4cd00" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Show Incidents"
+        android:id="@+id/mapsActivityButton"
+        android:textSize="22dp"
+        android:layout_above="@+id/contactActivityButton"
+        android:layout_alignStart="@+id/reportActivityButton"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="openMapsActivity"
+        android:background="#a3137fff" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:text="Contact"
+        android:id="@+id/contactActivityButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/mapsActivityButton"
+        android:layout_marginBottom="30dp"
+        android:textSize="22dp"
+        android:onClick="openContactActivity"
+        android:background="#b9ff4891" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="WELCOME TO THE FRIENDS APP"
+        android:id="@+id/launcherTitle"
+        android:layout_alignParentTop="true"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:onClick="titlePressed"
+        android:clickable="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
